@@ -1,60 +1,96 @@
 import User from '../models/user.js'
+import validateSignupInput from '../validation/signup.js'
+import validateLoginInput from '../validation/login.js'
+import jwt from 'jsonwebtoken'
+import bcrypt from 'bcrypt'
 
 
-import ErrorResponse from '../error/ErrorResponse.js'
 
-export const signupController = async(req,res,next) => {
-       
-    const {name, email, password } = req.body 
 
-     if(!name || !email || !password ){
-         return next(ErrorResponse.badRequest('Empty field occured!!!'))
-     }
 
-     try {
-        //checking for dublicate user
+export const signupController = async(req,res) => {
+      
+   const { errors, isValid } = validateSignupInput(req.body);
 
-        const user = await User.findOne({ email })
-        
-        if(user) return next(ErrorResponse.badRequest('Email already registered'))
-     } catch (err) {
-        next(err)
-     }
+   if (!isValid) {
+      return res.status(400).json(errors);
+   }
+   User.findOne({
+      email: req.body.email
+   }).then(async user => {
+      if (user) {
+         return res.status(400).json({
+            email: 'Email already exists'
+         });
+      }
+      else {
+         const hash = await bcrypt.hash(req.body.password, 10)
 
-     try {
-        //saving to db
-        const user = await User.create({    
-         name,
-         email,
-         password,
-        })
-       
-       if (user) {
-         res.status(201).json({
-            _id:user._id,
-            name:user.name,
-            email:user.email,
-            
+         User.create({
+            name: req.body.name,
+            email: req.body.email,
+            password: hash
+         }).then(user => {
+            res.json(user)
          })
-       }else{
 
-         next(ErrorResponse.badRequest('Something went wrong'))
-       }
+      }
+   });
 
 
-     } catch (err) {
-        if (err.code === 11000)
-            return next(ErrorResponse.badRequest('User already registered'))
-        
-      return next(err)
-
-     }
+    
    
 }
 
-export const loginController = async (req,res,next) => {
-     
-   const {email, password} = req.body
+export const loginController = async (req,res) => {
+       
+   const { errors, isValid } = validateLoginInput(req.body);
 
-    const user = await User.findOne({email})
+   if (!isValid) {
+      return res.status(400).json(errors);
+   }
+
+   const email = req.body.email;
+   const password = req.body.password;
+
+   User.findOne({ email })
+      .then(user => {
+         if (!user) {
+            errors.email = 'User not found'
+            return res.status(404).json(errors);
+         }
+         bcrypt.compare(password, user.password)
+            .then(isMatch => {
+               if (isMatch) {
+                  const payload = {
+                     id: user.id,
+                     name: user.name
+                  }
+                  jwt.sign(payload, process.env.JWT_SECRET,
+                     {
+                        expiresIn: 3600
+                     }, (err, token) => {
+                        if (err) console.error('There is some error in token', err);
+                        else {
+                           res.json({
+                              success: true,
+                              name: user.name,
+                              email: user.email,
+                              id: user.id,
+                              token: `Bearer ${token}`
+                           });
+                        }
+                     });
+               }
+               else {
+                  errors.password = 'Incorrect Password';
+                  return res.status(400).json(errors);
+               }
+            });
+      });
+
+   
+
+ 
+  
 }

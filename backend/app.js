@@ -8,7 +8,7 @@ import 'dotenv/config'
 //routes
 import authRoute from './routes/authRoute.js'
 
-import errorHandler from './error/errorHandler.js'
+
 import connectDatabse from './config/database.js'
 
 const app = express()
@@ -37,8 +37,7 @@ app.use((req,res)=>{
     res.status(404).json({ success : false , status: 404, message:"Not Found"})
 })
 
-// error handler
-app.use(errorHandler);
+
 
 
 const PORT = process.env.PORT || 5000;
