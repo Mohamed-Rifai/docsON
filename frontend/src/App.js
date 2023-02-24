@@ -1,5 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
+import LoginUser from './pages/User/LoginUser';
 import SignupUser from './pages/User/SignupUser';
 
 
@@ -11,7 +12,7 @@ function App() {
 
 
         <Route path='/' element={<SignupUser />}/>
-
+        <Route path='/login' element={<LoginUser/>}/>   
         
    </Routes>
   </Router>

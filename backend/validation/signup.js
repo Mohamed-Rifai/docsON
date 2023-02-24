@@ -8,7 +8,7 @@ export default function validateSignupInput (data) {
     data.name = !isEmpty(data.name) ? data.name : '';
     data.email = !isEmpty(data.email) ? data.email : '';
     data.password = !isEmpty(data.password) ? data.password : '';
-    data.conPassword = !isEmpty(data.conPassword) ? data.conPassword : '';
+    data.confirmPassword = !isEmpty(data.confirmPassword) ? data.confirmPassword : '';
 
     if (!isLength(data.name, { min: 2, max: 30 })) {
         errors.name = 'Name must be between 2 to 30 chars';
@@ -34,16 +34,16 @@ export default function validateSignupInput (data) {
         errors.password = 'Password is required';
     }
 
-    if (!isLength(data.conPassword, { min: 6, max: 30 })) {
-        errors.conPassword = 'Password must have 6 chars';
+    if (!isLength(data.confirmPassword, { min: 6, max: 30 })) {
+        errors.confirmPassword = 'Password must have 6 chars';
     }
 
-    if (!equals(data.password, data.conPassword)) {
-        errors.conPassword = 'Password and Confirm Password must match';
+    if (!equals(data.password, data.confirmPassword)) {
+        errors.confirmPassword = 'Password and Confirm Password must match';
     }
 
-    if (_isEmpty(data.conPassword)) {
-        errors.conPassword = 'Password is required';
+    if (_isEmpty(data.confirmPassword)) {
+        errors.confirmPassword = 'Password is required';
     }
 
     return {

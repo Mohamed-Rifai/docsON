@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import {useNavigate} from 'react-router-dom'
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import axios from '../../../axios'
 
@@ -8,8 +9,8 @@ const UserSignup = () => {
 
   const initialValues = {name : "" , email: "", password: "", confirmPassword: ""}
   const [formData,setFormData] = useState(initialValues)
-
-
+  const [errors, setErrors] = useState(null)
+  const navigate = useNavigate()
     const onChangeHandle = (e) => {
      
         const {name, value} = e.target;
@@ -25,15 +26,28 @@ const UserSignup = () => {
             email:formData.email,
             password:formData.password,
             confirmPassword:formData.confirmPassword
+        }).then((res)=>{
+            console.log(res.data);
+            navigate('/login')
+        }).catch((err)=>{
+            console.log(err);
+            const obj = err.response.data
+            const arr = [...Object.values(obj)]
+            setErrors(arr[0])
+           
+
         })
+       
 
     }
+    
 
   return (
       <Container>
           <Row>
               <Col md={{ span: 6, offset: 3 }}>
                   <h1>Sign Up</h1>
+                  {errors && <p style={{color:"red"}}>{errors}</p>}
                   <Form onSubmit={handleSubmit}>
                       <Form.Group controlId="formBasicName">
                           <Form.Label>Nama</Form.Label>

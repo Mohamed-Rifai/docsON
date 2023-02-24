@@ -43,7 +43,7 @@ export const signupController = async(req,res) => {
 }
 
 export const loginController = async (req,res) => {
-       
+       console.log('reached');
    const { errors, isValid } = validateLoginInput(req.body);
 
    if (!isValid) {
