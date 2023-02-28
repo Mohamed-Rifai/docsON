@@ -1,7 +1,10 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
-import LoginUser from './pages/User/LoginUser';
-import SignupUser from './pages/User/SignupUser';
+import Landing from './pages/Landing/Landing';
+import DocterListPage from './pages/User/DocterListPage';
+import DocterProfilePage from './pages/User/DocterProfilePage';
+import HospitalViewPage from './pages/User/HospitalViewPage';
+// import LoginUser from './pages/User/LoginUser';
+// import SignupUser from './pages/User/SignupUser';
 
 
 function App() {
@@ -11,8 +14,13 @@ function App() {
   <Routes>
 
 
-        <Route path='/' element={<SignupUser />}/>
-        <Route path='/login' element={<LoginUser/>}/>   
+        {/* <Route path='/signup' element={<SignupUser />}/>
+          <Route path='/login' element={<LoginUser />} /> */}
+          <Route path='/' element={<Landing />} />
+          <Route path='/hospitalview' element={<HospitalViewPage/>} />
+          <Route path='/docterslist' element={<DocterListPage/>} />
+          <Route path='/docterview' element={<DocterProfilePage/>} />
+           
         
    </Routes>
   </Router>

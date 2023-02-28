@@ -1,4 +1,4 @@
-// is-empty.js
+
 
 const isEmpty = (value) => {
     return (

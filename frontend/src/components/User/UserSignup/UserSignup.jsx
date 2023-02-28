@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import {useNavigate} from 'react-router-dom'
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import axios from '../../../axios'
 
 
@@ -43,63 +42,53 @@ const UserSignup = () => {
     
 
   return (
-      <Container>
-          <Row>
-              <Col md={{ span: 6, offset: 3 }}>
-                  <h1>Sign Up</h1>
-                  {errors && <p style={{color:"red"}}>{errors}</p>}
-                  <Form onSubmit={handleSubmit}>
-                      <Form.Group controlId="formBasicName">
-                          <Form.Label>Nama</Form.Label>
-                          <Form.Control
-                          name='name'
-                           type="text"
-                           value={formData.name}
-                           onChange={onChangeHandle}
+    <div>
+     
 
-                           placeholder="Enter name" />
-                      </Form.Group>
+      <div>
+        
+        <h2>Sign Up</h2>
+              {errors && <p style={{ color: "red" }}>{errors}</p>}
+   <form onSubmit={handleSubmit}>
+        <label >Name</label>
+        <input 
+         name='name'
+         onChange={onChangeHandle}
+         type="text"
+         value={formData.name}
+        placeholder="Enter name" /> <br />
+       
+              <label >Email</label>
+              <input
+                  name='email'
+                  type="email"
+                  value={formData.email}
+                  onChange={onChangeHandle}
 
-                      <Form.Group controlId="formBasicEmail">
-                          <Form.Label>Email address</Form.Label>
-                          <Form.Control 
-                          name='email'
-                          type="email"
-                          value={formData.email}
-                              onChange={onChangeHandle}
+                  placeholder="Enter email" /> <br />
 
-                          placeholder="Enter email"
-                           />
-                      </Form.Group>
+              <label >Password</label>
+              <input
+                  name='password'
+                  type="password"
+                  value={formData.password}
+                  onChange={onChangeHandle}
 
-                      <Form.Group controlId="formBasicPassword">
-                          <Form.Label>Password</Form.Label>
-                          <Form.Control
-                          name='password'
-                           type="password"
-                           value={formData.password}
-                              onChange={onChangeHandle}
+                  placeholder="Password"/>
 
-                            placeholder="Password" />
-                      </Form.Group>
+              <label >confirm Password</label>
+              <input
+                  name='confirmPassword'
+                  type="password"
+                  value={formData.confirmPassword}
+                  onChange={onChangeHandle}
+                  placeholder="Confirm Password" /> 
 
-                      <Form.Group controlId="formBasicConfirmPassword">
-                          <Form.Label>Confirm Password</Form.Label>
-                          <Form.Control
-                          name='confirmPassword'
-                           type="password"
-                           value={formData.confirmPassword}
-                           onChange={onChangeHandle}
-                           placeholder="Confirm Password" />
-                      </Form.Group>
+  <button type='submit'>Signup</button>
+              </form>
+      </div>
 
-                      <Button variant="primary" type="submit">
-                          Sign Up
-                      </Button>
-                  </Form>
-              </Col>
-          </Row>
-      </Container>
+      </div>
   )
 }
 

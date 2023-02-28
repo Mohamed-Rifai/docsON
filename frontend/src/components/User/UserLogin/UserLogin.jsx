@@ -1,6 +1,5 @@
 import axios from '../../../axios';
 import { useState } from 'react';
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
 const UserLogin = () => {
@@ -35,43 +34,31 @@ const UserLogin = () => {
     };
 
     return (
-        <Container>
-            <Row className="justify-content-center mt-5">
-                <Col md={6}>
-                    <h2 className="text-center mb-4">Login</h2>
-                    {errors && <p className='text-danger'>{errors}</p>}
-                    <Form onSubmit={handleSubmit}>
-                        <Form.Group controlId="formBasicEmail">
-                            <Form.Label>Email address</Form.Label>
-                            <Form.Control
-                                name="email"
-                                type="email"
-                                placeholder="Enter email"
-                                value={formData.email}
-                                onChange={onChangeHandle}
-                                className="form-control mb-3"
-                            />
-                        </Form.Group>
 
-                        <Form.Group controlId="formBasicPassword">
-                            <Form.Label>Password</Form.Label>
-                            <Form.Control
-                                name='password'
-                                type="password"
-                                placeholder="Password"
-                                value={formData.password}
-                                onChange={onChangeHandle}
-                                className="form-control mb-3"
-                            />
-                        </Form.Group>
+        <div>
+    <h1>Login</h1>
+                {errors && <p className='text-danger'>{errors}</p>}
 
-                        <Button variant="primary" type="submit" className="btn-block">
-                            Submit
-                        </Button>
-                    </Form>
-                </Col>
-            </Row>
-        </Container>
+            <form onSubmit={handleSubmit}>
+            <label >Name</label>
+            <input 
+             name="email"                       
+              type="email"
+            placeholder="Enter email"
+             value={formData.email}
+            onChange={onChangeHandle}/>
+
+           <label >Name</label>
+            <input 
+             name='password'
+              type="password"
+              placeholder="Password"
+             value={formData.password}
+             onChange={onChangeHandle} />
+
+             <button type='submit'>Login</button>
+            </form>
+        </div>
     );
 };
 

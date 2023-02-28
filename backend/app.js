@@ -7,7 +7,8 @@ import 'dotenv/config'
 
 //routes
 import authRoute from './routes/authRoute.js'
-
+import userRoute from './routes/userRoute.js'
+import hospitalRoute from './routes/hospitalRoute.js'
 
 import connectDatabse from './config/database.js'
 
@@ -32,6 +33,8 @@ connectDatabse()
 
 //api
 app.use('/api/auth',authRoute)
+app.use('/api/user',userRoute)
+app.use('/api/hospital',hospitalRoute)
 
 app.use((req,res)=>{
     res.status(404).json({ success : false , status: 404, message:"Not Found"})
