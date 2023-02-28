@@ -39,4 +39,20 @@ export const createHospital = async (req, res) => {
  
  
 }
+
+export const getHospitals = async (req,res) => {
+ 
+  try {
+    
+   const hospitals = await Hospital.find({})
+    console.log(hospitals);
+   res.status(200).json(hospitals)
+
+  
+
+  } catch (err) {
+    res.status(404).json(err)
+  }
+    
+}
   
