@@ -17,7 +17,7 @@ function App() {
         {/* <Route path='/signup' element={<SignupUser />}/>
           <Route path='/login' element={<LoginUser />} /> */}
           <Route path='/' element={<Landing />} />
-          <Route path='/hospitalview' element={<HospitalViewPage/>} />
+          <Route path='/hospitalview/:id' element={<HospitalViewPage/>} />
           <Route path='/docterslist' element={<DocterListPage/>} />
           <Route path='/docterview' element={<DocterProfilePage/>} />
            

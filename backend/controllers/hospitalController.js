@@ -3,7 +3,6 @@ import Hospital from "../models/hospitalSchema.js";
 import validateSignupHospital from "../validation/hospitalSignup.js";
 
 export const createHospital = async (req, res) => {
- 
   const { errors, isValid } = validateSignupHospital(req.body);
 
   if (!isValid) {
@@ -35,24 +34,26 @@ export const createHospital = async (req, res) => {
       });
     }
   });
+};
 
- 
- 
-}
-
-export const getHospitals = async (req,res) => {
- 
+export const getHospitals = async (req, res) => {
   try {
-    
-   const hospitals = await Hospital.find({})
-    console.log(hospitals);
-   res.status(200).json(hospitals)
+    //get all hospitals in db
+    const hospitals = await Hospital.find({});
 
-  
-
+    res.status(200).json(hospitals);
   } catch (err) {
-    res.status(404).json(err)
+    res.status(400).json(err);
   }
+};
+
+export const getOneHospital = async (req, res) => {
+  try {
+     const data = await Hospital.findById(req.params.id);
+     console.log(data);
+  } catch (err) {
+    res.status(400).json(err);
     
-}
-  
+  }
+ 
+};

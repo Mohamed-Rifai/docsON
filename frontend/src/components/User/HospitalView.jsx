@@ -1,10 +1,25 @@
-import React from "react";
-import { useParams } from "react-router-dom";
+import  { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import axios from "../../axios";
+
 
 const HospitalView = () => {
-  const { hospitalId } = useParams();
+  const  hospitalId  = useParams();
+  const id = hospitalId.id.toString()
+ 
+  const [hospitalData, setHospitalData] = useState(null);
 
-  // Fetch hospital data and doctors data for the given hospitalId from your backend API
+  useEffect(() => {
+    // Fetch hospital data for the given hospitalId
+    axios
+      .get(`/hospital/gethospital/${id}`)
+      .then((response) => {
+        setHospitalData(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [hospitalId]);
 
   return (
     <div className="min-h-min bg-white overflow-hidden">
@@ -34,9 +49,7 @@ const HospitalView = () => {
             </div>
             <div className="mb-4">
               <h3 className="text-lg font-bold text-white">Website:</h3>
-              <a href="#" className="text-blue-500">
-                www.hospital.com
-              </a>
+              <Link className="text-blue-500">www.hospital.com</Link>
             </div>
             <div className="mb-4">
               <h3 className="text-lg font-bold text-white">Doctors:</h3>
