@@ -50,7 +50,7 @@ export const getHospitals = async (req, res) => {
 export const getOneHospital = async (req, res) => {
   try {
      const data = await Hospital.findById(req.params.id);
-     console.log(data);
+     res.status(200).json(data)
   } catch (err) {
     res.status(400).json(err);
     
