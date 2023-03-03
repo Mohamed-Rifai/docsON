@@ -9,8 +9,7 @@ export default function validateSignupHospital (data) {
     data.email = !isEmpty(data.email) ? data.email : '';
     data.password = !isEmpty(data.password) ? data.password : '';
     data.confirmPassword = !isEmpty(data.confirmPassword) ? data.confirmPassword : '';
-    data.address = !isEmpty(data.address) ? data.address : '';
-    data.city = !isEmpty(data.city) ? data.city : '';
+    data.place = !isEmpty(data.city) ? data.place : "";
     data.state = !isEmpty(data.state) ? data.state : '';
     data.zip = !isEmpty(data.zip) ? data.zip : '';
 
@@ -50,12 +49,9 @@ export default function validateSignupHospital (data) {
         errors.confirmPassword = 'Password is required';
     }
 
-    if (_isEmpty(data.address)) {
-        errors.address = 'Address field is required';
-    }
 
-    if (_isEmpty(data.city)) {
-        errors.city = 'City field is required';
+    if (_isEmpty(data.place)) {
+        errors.city = 'Place is required';
     }
 
     if (_isEmpty(data.state)) {

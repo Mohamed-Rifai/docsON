@@ -14,11 +14,8 @@ const hospitalSchema =  mongoose.Schema({
         type: String,
         required: true
     },
-  address: {
-    type: String,
-    required: true
-  },
-  city: {
+  
+  place: {
     type: String,
     required: true
   },
@@ -31,7 +28,8 @@ const hospitalSchema =  mongoose.Schema({
     required: true
   },
   photo: {
-    type: String
+    type: String,
+    required:true
   },
   doctors: [{
     type: mongoose.Schema.Types.ObjectId,

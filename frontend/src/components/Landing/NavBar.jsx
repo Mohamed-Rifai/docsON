@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const NavBar = () => {
   const [nav, setNav] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [authenticated, setAuthenticated] = useState(false);
+  const navigate = useNavigate()
 
 
   const handleNav = () => {
@@ -14,6 +16,14 @@ const NavBar = () => {
   const handleDropdown = () => {
     setShowDropdown(!showDropdown);
   };
+   const handleLogout = () => {
+     // clear the authentication token from local storage
+     localStorage.removeItem("UserToken");
+    
+     setAuthenticated(false);
+     // redirect the user to the login page
+    
+   };
 
   return (
     <div className="flex justify-between items-center h-24 max-w-[1240px] mx-auto px-4 text-white ]">
@@ -32,15 +42,17 @@ const NavBar = () => {
           className="relative p-4 hover:cursor-pointer"
           onClick={handleDropdown}
         >
-          <span>Contact</span>
+          <span>Login</span>
           <ul
-            className={`absolute top-full left-0 w-40 bg-gray-800 text-white rounded-md py-2 ${
+            className={`absolute top-full left-0 w-40 uppercase bg-gray-800 text-white rounded-md py-2 ${
               showDropdown ? "block" : "hidden"
             }`}
           >
-            <li className="px-3 py-2 hover:bg-gray-900">Phone</li>
-            <li className="px-3 py-2 hover:bg-gray-900">Email</li>
-            <li className="px-3 py-2 hover:bg-gray-900">Address</li>
+            <Link to='/login'>
+              <li className="px-3 py-2 hover:bg-gray-900">User Login</li>
+            </Link>
+            <li className="px-3 py-2 hover:bg-gray-900">Hospital Panel</li>
+            <li className="px-3 py-2 hover:bg-gray-900">Dashboard</li>
           </ul>
         </li>
       </ul>
@@ -63,11 +75,12 @@ const NavBar = () => {
           <Link to="/docterslist">
             <li className="p-4 border-b border-gray-600">Doctors</li>
           </Link>
+          <li className="p-4 border-b border-gray-600 ">Company</li>
           <li
             className="p-4 relative hover:cursor-pointer"
             onClick={handleDropdown}
           >
-            Contact
+            Login
             <ul
               className={`absolute bg-gray-800 right-0 top-full w-48 text-white rounded-md py-2 ${
                 showDropdown ? "block" : "hidden"
@@ -75,19 +88,18 @@ const NavBar = () => {
             >
               <Link to="#">
                 <li className="p-4 border-b border-gray-600 hover:bg-gray-900">
-                  Email
+                  User Login
                 </li>
               </Link>
 
               <Link to="#">
                 <li className="p-4 border-b border-gray-600 hover:bg-gray-900">
-                  Phone
+                  Hospital panel
                 </li>
               </Link>
-              <li className="p-4 hover:bg-gray-900">Social Media</li>
+              <li className="p-4 hover:bg-gray-900">Dashboard</li>
             </ul>
           </li>
-          <li className="p-4 border-b border-gray-600 ">Company</li>
         </ul>
       </div>
     </div>
