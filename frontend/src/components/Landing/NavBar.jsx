@@ -6,8 +6,7 @@ const NavBar = () => {
   const [nav, setNav] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
-  const navigate = useNavigate()
-
+  const navigate = useNavigate();
 
   const handleNav = () => {
     setNav(!nav);
@@ -16,14 +15,21 @@ const NavBar = () => {
   const handleDropdown = () => {
     setShowDropdown(!showDropdown);
   };
-   const handleLogout = () => {
-     // clear the authentication token from local storage
-     localStorage.removeItem("UserToken");
-    
-     setAuthenticated(false);
-     // redirect the user to the login page
-    
-   };
+
+  const handleLogout = () => {
+    // clear the authentication token from local storage
+    localStorage.removeItem("UserToken");
+
+    setAuthenticated(false);
+
+    navigate("/");
+  };
+
+  // check if the user is authenticated
+  const token = localStorage.getItem("UserToken");
+  if (token && !authenticated) {
+    setAuthenticated(true);
+  }
 
   return (
     <div className="flex justify-between items-center h-24 max-w-[1240px] mx-auto px-4 text-white ]">
@@ -37,24 +43,29 @@ const NavBar = () => {
         <Link to="/docterslist">
           <li className="p-4">Docters</li>
         </Link>
-        {/* <li className="p-4">Contact</li> */}
-        <li
-          className="relative p-4 hover:cursor-pointer"
-          onClick={handleDropdown}
-        >
-          <span>Login</span>
-          <ul
-            className={`absolute top-full left-0 w-40 uppercase bg-gray-800 text-white rounded-md py-2 ${
-              showDropdown ? "block" : "hidden"
-            }`}
+        {authenticated ? (
+          <li className="p-4 hover:cursor-pointer" onClick={handleLogout}>
+            Logout
+          </li>
+        ) : (
+          <li
+            className="relative p-4 hover:cursor-pointer"
+            onClick={handleDropdown}
           >
-            <Link to='/login'>
-              <li className="px-3 py-2 hover:bg-gray-900">User Login</li>
-            </Link>
-            <li className="px-3 py-2 hover:bg-gray-900">Hospital Panel</li>
-            <li className="px-3 py-2 hover:bg-gray-900">Dashboard</li>
-          </ul>
-        </li>
+            <span>Login</span>
+            <ul
+              className={`absolute top-full left-0 w-40 uppercase bg-gray-800 text-white rounded-md py-2 ${
+                showDropdown ? "block" : "hidden"
+              }`}
+            >
+              <Link to="/login">
+                <li className="px-3 py-2 hover:bg-gray-900">User Login</li>
+              </Link>
+              <li className="px-3 py-2 hover:bg-gray-900">Hospital Panel</li>
+              <li className="px-3 py-2 hover:bg-gray-900">Dashboard</li>
+            </ul>
+          </li>
+        )}
       </ul>
       <div onClick={handleNav} className="block md:hidden hover:cursor-pointer">
         {nav ? <AiOutlineClose size={22} /> : <AiOutlineMenu size={22} />}
