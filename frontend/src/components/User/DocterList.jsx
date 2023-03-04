@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
+import { Link } from "react-router-dom";
 const DoctorList = () => {
   const [searchValue, setSearchValue] = useState("");
 
@@ -38,40 +39,43 @@ const DoctorList = () => {
       </div>
 
       {/* Doctors Cards */}
-      <div className="max-w-screen-md mx-auto my-8 grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        <div className="bg-white rounded-lg shadow overflow-hidden my-4">
-          <img
-            src="https://mediaproxy.salon.com/width/1200/https://media.salon.com/2022/06/doctor-writing-notes-clipboard-0624221.jpg"
-            alt=""
-            className="w-full"
-          />
-          <div className="px-4 py-2">
-            <h2 className="text-lg font-bold text-gray-800">Dr. John Doe</h2>
-            <p className="text-gray-600">Cardiology</p>
-            <p className="text-gray-500">Hospital Name</p>
-            <div className="flex items-center">
-              <span className="text-yellow-500">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  className="w-4 h-4 mr-1"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M19.293 7.293a1 1 0 00-1.414-1.414L10 13.586 6.707 10.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l9-9z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </span>
-              <span className="text-gray-600">4.5</span>
-              <span className="text-gray-400"> (400)</span>
+        
+        <div className="max-w-screen-md mx-auto my-8 grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <Link to='/user/docterview'>
+          <div className="bg-white rounded-lg shadow overflow-hidden my-4">
+            <img
+              src="https://mediaproxy.salon.com/width/1200/https://media.salon.com/2022/06/doctor-writing-notes-clipboard-0624221.jpg"
+              alt=""
+              className="w-full"
+            />
+            <div className="px-4 py-2">
+              <h2 className="text-lg font-bold text-gray-800">Dr. John Doe</h2>
+              <p className="text-gray-600">Cardiology</p>
+              <p className="text-gray-500">Hospital Name</p>
+              <div className="flex items-center">
+                <span className="text-yellow-500">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    className="w-4 h-4 mr-1"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M19.293 7.293a1 1 0 00-1.414-1.414L10 13.586 6.707 10.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l9-9z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </span>
+                <span className="text-gray-600">4.5</span>
+                <span className="text-gray-400"> (400)</span>
+              </div>
             </div>
           </div>
-        </div>
+      </Link>
 
-        {/* Add more Doctor Cards here */}
-      </div>
+          {/* Add more Doctor Cards here */}
+        </div>
     </div>
   );
 };

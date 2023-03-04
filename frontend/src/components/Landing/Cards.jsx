@@ -36,7 +36,7 @@ useEffect(() => {
             <div className="text-center font-medium ">
               <p className="py-2 border-b mx-8">{data.city}</p>
             </div>
-            <Link to={`/hospitalview/${data._id}`}>
+            <Link to={`/user/hospitalview/${data._id}`}>
               <button className="text-black w-[200px] rounded-md font-medium my-6 mx-auto  px-6 py-3 bg-[#00df9a]">
                 Visit
               </button>

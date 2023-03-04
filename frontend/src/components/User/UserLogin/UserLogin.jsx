@@ -143,7 +143,7 @@ const LoginForm = () => (
 
       <div className="flex items-center mt-4">
         <span className="mr-2 text-gray-600">Don't have an account?</span>
-        <Link to="/signup" className="text-blue-500 hover:text-blue-700">
+        <Link to="/user/signup" className="text-blue-500 hover:text-blue-700">
           Signup
         </Link>
       </div>

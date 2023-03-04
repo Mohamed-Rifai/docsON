@@ -102,7 +102,7 @@ const SignupForm = () => (
         <span className="mr-2 text-gray-600">
           Already have an account?
         </span>
-        <Link to="/login" className="text-blue-500 hover:text-blue-700">
+        <Link to="/user/login" className="text-blue-500 hover:text-blue-700">
           Login
         </Link>
       </div>

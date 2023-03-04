@@ -1,10 +1,12 @@
 import React from 'react'
+import Header from '../../components/Hospital/Header'
 
 
 const HospitalHome = () => {
   return (
-    <div >
-     Iam hospital page
+    <div className='text-white'>
+     
+    <Header/>
     </div>
   )
 }
