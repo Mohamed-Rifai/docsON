@@ -8,7 +8,7 @@ import bcrypt from 'bcrypt'
 
 
 
-export const signupController = async(req,res) => {
+export const userSignupController = async(req,res) => {
       
    const { errors, isValid } = validateSignupInput(req.body);
 
@@ -42,7 +42,7 @@ export const signupController = async(req,res) => {
    
 }
 
-export const loginController = async (req,res) => {
+export const userLoginController = async (req,res) => {
       
    const { errors, isValid } = validateLoginInput(req.body);
 

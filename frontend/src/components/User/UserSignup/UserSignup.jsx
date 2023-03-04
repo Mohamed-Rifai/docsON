@@ -116,9 +116,9 @@ const UserSignup = () => {
     const handleSubmit = async (values) => {
 
         try {
-           await axios.post("/auth/signup",values);
+           await axios.post("/auth/user-signup",values);
            
-          navigate('/login')
+          navigate('/user/login')
 
         } catch (err) {
             console.log(err);

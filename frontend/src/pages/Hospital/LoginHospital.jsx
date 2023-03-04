@@ -1,5 +1,5 @@
-import axios from "../../../axios";
-import { UseErrorToast } from "../../../hooks/useToast";
+import axios from "../../axios";
+import { UseErrorToast } from "../../hooks/useToast";
 import { Link, useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -49,7 +49,10 @@ const LoginForm = () => (
 
       <div className="flex items-center mt-4">
         <span className="mr-2 text-gray-600">Don't have an account?</span>
-        <Link to="/user/signup" className="text-blue-500 hover:text-blue-700">
+        <Link
+          to="/hospital/registration"
+          className="text-blue-500 hover:text-blue-700"
+        >
           Signup
         </Link>
       </div>
@@ -57,18 +60,18 @@ const LoginForm = () => (
   </Form>
 );
 
-const UserLogin = () => {
+const LoginHospital = () => {
   const navigate = useNavigate();
 
   const handleSubmit = async (values) => {
     try {
-    const response =  await axios.post("/auth/user-login", values);
+      const response = await axios.post("/auth/hospital-login", values);
       const token = response.data.token;
-      localStorage.setItem("UserToken", token);
+      localStorage.setItem("HospitalToken", token);
       navigate("/");
     } catch (err) {
       console.log(err);
-      const obj = err.response.data;      
+      const obj = err.response.data;
       const arr = [...Object.values(obj)];
 
       UseErrorToast({ message: arr[0] });
@@ -88,4 +91,4 @@ const UserLogin = () => {
   );
 };
 
-export default UserLogin;
+export default LoginHospital;
