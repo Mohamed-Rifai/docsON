@@ -31,10 +31,7 @@ const hospitalSchema =  mongoose.Schema({
     type: String,
     required:true
   },
-  doctors: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Doctor'
-  }]
+  
 });
 
 export default mongoose.model('Hospital', hospitalSchema);

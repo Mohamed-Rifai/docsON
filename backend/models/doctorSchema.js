@@ -17,12 +17,12 @@ const doctorSchema = new mongoose.Schema({
     type: [String],
     required: true
   },
-  appointments: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Appointment'
-  }],
+  // appointments: [{
+  //   type: Schema.Types.ObjectId,
+  //   ref: 'Appointment'
+  // }],
   hospital: {
-    type: Schema.Types.ObjectId,
+    type:mongoose.Schema.Types.ObjectId,
     ref: 'Hospital',
     required: true
   }
