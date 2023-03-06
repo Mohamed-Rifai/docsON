@@ -1,4 +1,5 @@
 import express from 'express'
+import bodyParser from 'body-parser'
 import morgan from 'morgan'
 import cors from 'cors'
 
@@ -21,8 +22,8 @@ app.use(cors())
 
    // body parsers
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
+// app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 //logger
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));

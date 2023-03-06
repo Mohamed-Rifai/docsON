@@ -12,6 +12,7 @@ export default function validateSignupHospital (data) {
     data.place = !isEmpty(data.city) ? data.place : "";
     data.state = !isEmpty(data.state) ? data.state : '';
     data.zip = !isEmpty(data.zip) ? data.zip : '';
+    data.phone = !isEmpty(data.phone) ? data.phone : "";
 
     if (!isLength(data.name, { min: 2, max: 30 })) {
         errors.name = 'Name must be 2 chars';
@@ -51,7 +52,7 @@ export default function validateSignupHospital (data) {
 
 
     if (_isEmpty(data.place)) {
-        errors.city = 'Place is required';
+        errors.place = "Place is required";
     }
 
     if (_isEmpty(data.state)) {
@@ -63,6 +64,12 @@ export default function validateSignupHospital (data) {
     } else if (!isPostalCode(data.zip, 'any')) {
         errors.zip = 'Please provide a valid zip code';
     }
+
+     if (_isEmpty(data.phone)) {
+       errors.phone = "Phone number is required";
+     } else if (!isLength(data.phone, { min: 10, max: 10 })) {
+       errors.phone = "Invalid number";
+     }
 
     return {
         errors,

@@ -8,6 +8,12 @@ const Header = () => {
   const [authenticated, setAuthenticated] = useState(false);
   const navigate = useNavigate();
 
+  // check if the user is authenticated
+  const token = localStorage.getItem("HospitalToken");
+  if (token && !authenticated) {
+    setAuthenticated(true);
+  }
+
   const handleNav = () => {
     setNav(!nav);
   };
@@ -18,33 +24,27 @@ const Header = () => {
 
   const handleLogout = () => {
     // clear the authentication token from local storage
-    localStorage.removeItem("UserToken");
+    localStorage.removeItem("HospitalToken");
 
     setAuthenticated(false);
 
-    navigate("/");
+    navigate("/hospital/home");
   };
 
-  // check if the user is authenticated
-  const token = localStorage.getItem("UserToken");
-  if (token && !authenticated) {
-    setAuthenticated(true);
-  }
-
   return (
-    <div className="flex justify-between items-center h-24 max-w-[1240px] mx-auto px-4 text-white ]">
-      <h1 className="w-full text-3xl font-bold  text-[#00df9a]">+docsOn</h1>
+    <div className="flex justify-between bg-gray-300 items-center h-24 w-full mx-auto px-4 text-gray-800 ">
+      <h1 className="w-full text-3xl font-bold  text-[#0fad7b]">+docsOn</h1>
 
       <ul className="hidden md:flex">
-        <Link to="/">
+        <Link to="/hospital/home">
           <li className="p-4">Home</li>
         </Link>
         <li className="p-4">Company</li>
-        <Link to="/user/docterslist">
+        <Link to="/hospital/docters">
           <li className="p-4">Docters</li>
         </Link>
         {authenticated ? (
-             <li
+          <li
             className="relative p-4 hover:cursor-pointer"
             onClick={handleDropdown}
           >
@@ -54,16 +54,18 @@ const Header = () => {
                 showDropdown ? "block" : "hidden"
               }`}
             >
-              <Link to="/hospital/home">
+              <Link to="#">
                 <li className="px-3 py-2 hover:bg-gray-900">Profile</li>
               </Link>
-              
-                <li className="px-3 py-2 hover:bg-gray-900" onClick={handleLogout}>Logout</li>
-             
-             
+
+              <li
+                className="px-3 py-2 hover:bg-gray-900"
+                onClick={handleLogout}
+              >
+                Logout
+              </li>
             </ul>
           </li>
-          
         ) : (
           <li
             className="relative p-4 hover:cursor-pointer"
@@ -81,7 +83,6 @@ const Header = () => {
               <Link to="/hospital/registration">
                 <li className="px-3 py-2 hover:bg-gray-900">Signup</li>
               </Link>
-             
             </ul>
           </li>
         )}
@@ -92,52 +93,69 @@ const Header = () => {
       <div
         className={
           nav
-            ? "fixed left-0 top-0 w-[60%] h-full border-r border-r-gray-900 bg-[#000300] ease-in-out duration-500"
+            ? "fixed left-0 top-0 w-[60%] h-full border-r border-r-gray-900 bg-gray-300 ease-in-out duration-500"
             : "fixed left-[-100%]"
         }
       >
-        <h1 className="w-full text-3xl font-bold  text-[#00df9a] m-4">
+        <h1 className="w-full text-3xl font-bold  text-[#0fad7b] m-4">
           +docsOn
         </h1>
 
         <ul className="uppercase p-4">
-          <Link to="/">
+          <Link to="/hospital/home">
             <li className="p-4 border-b border-gray-600">Home</li>
           </Link>
           <li className="p-4 border-b border-gray-600 ">Company</li>
-          <Link to="/user/docterslist">
+          <Link to="/hospital/docters">
             <li className="p-4 border-b border-gray-600">Doctors</li>
           </Link>
           {authenticated ? (
             <li
-              className="p-4 border-b border-gray-600 hover:cursor-pointer"
-              onClick={handleLogout}
+              className="p-4 relative hover:cursor-pointer"
+              onClick={handleDropdown}
             >
-              Logout
+              <span>Lakshore</span>
+              <ul
+                className={`absolute bg-gray-800 right-0 top-full w-48 text-white rounded-md py-2 ${
+                  showDropdown ? "block" : "hidden"
+                }`}
+              >
+                <Link to="#">
+                  <li className="p-4 border-b border-gray-600 hover:bg-gray-900">
+                    Profile
+                  </li>
+                </Link>
+
+                <li
+                  className="p-4 border-b border-gray-600 hover:bg-gray-900"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </li>
+              </ul>
             </li>
           ) : (
             <li
               className="p-4 relative hover:cursor-pointer"
               onClick={handleDropdown}
             >
-              Login
+              <span>Account</span>
               <ul
                 className={`absolute bg-gray-800 right-0 top-full w-48 text-white rounded-md py-2 ${
                   showDropdown ? "block" : "hidden"
                 }`}
               >
-                <Link to="/user/login">
+                <Link to="/hospital/login">
                   <li className="p-4 border-b border-gray-600 hover:bg-gray-900">
-                    User Login
+                    Login
                   </li>
                 </Link>
 
-                <Link to="/hospital/home">
+                <Link to="/hospital/registration">
                   <li className="p-4 border-b border-gray-600 hover:bg-gray-900">
-                    Hospital panel
+                    Signup
                   </li>
                 </Link>
-                <li className="p-4 hover:bg-gray-900">Dashboard</li>
               </ul>
             </li>
           )}
