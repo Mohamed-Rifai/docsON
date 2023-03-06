@@ -32,8 +32,10 @@ const Header = () => {
   };
 
   return (
-    <div className="flex justify-between bg-gray-300 items-center h-24 w-full mx-auto px-4 text-gray-800 ">
-      <h1 className="w-full text-3xl font-bold  text-[#0fad7b]">+docsOn</h1>
+    <div
+      className=" border-y flex justify-between items-center bg-white h-24 max-w-[1240px] mx-auto px-4 text-gray-800 ] "
+    >
+      <h1 className="w-full text-3xl font-bold  text-[#04cc8d]">+docsOn</h1>
 
       <ul className="hidden md:flex">
         <Link to="/hospital/home">

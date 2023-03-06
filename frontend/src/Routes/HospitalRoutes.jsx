@@ -1,5 +1,6 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
+import DoctersDetails from '../pages/Hospital/DoctersDetails';
 import HospitalHome from '../pages/Hospital/HospitalHome';
 import LoginHospital from '../pages/Hospital/LoginHospital';
 import RegisterHospital from '../pages/Hospital/RegisterHospital';
@@ -10,6 +11,7 @@ const HospitalRoutes = () => (
     <Route path="/registration" element={<RegisterHospital />} />
     
     <Route path="/home" element={<HospitalHome />} />
+    <Route path='/docters' element={<DoctersDetails/>} />
   </Routes>
 );
  

@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "../../../axios";
@@ -24,6 +24,18 @@ const SignupHospital = () => {
     const formRef = useRef(null)
     const navigate = useNavigate()
    
+
+ useEffect(() => {
+
+  const token = localStorage.getItem("HospitalToken");
+  if(token){
+
+    navigate('/hospital/home')
+  }
+ })
+
+
+
   const onChangeHandle = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
