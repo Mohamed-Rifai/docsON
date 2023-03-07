@@ -4,27 +4,27 @@ import { AiOutlinePlus, AiOutlineEye, AiOutlineEdit } from "react-icons/ai";
 import EmptyDocters from "./EmptyDocters";
 
 const doctors = [
-  {
-    id: 1,
-    name: "Dr. John Doe",
-    department: "Cardiology",
-    phone: "(123) 456-7890",
-    image: "https://via.placeholder.com/48",
-  },
-  {
-    id: 2,
-    name: "Dr. Jane Smith",
-    department: "Pediatrics",
-    phone: "(123) 456-7890",
-    image: "https://via.placeholder.com/48",
-  },
-  {
-    id: 3,
-    name: "Dr. David Johnson",
-    department: "Oncology",
-    phone: "(123) 456-7890",
-    image: "https://via.placeholder.com/48",
-  },
+//   {
+//     id: 1,
+//     name: "Dr. John Doe",
+//     department: "Cardiology",
+//     phone: "(123) 456-7890",
+//     image: "https://via.placeholder.com/48",
+//   },
+//   {
+//     id: 2,
+//     name: "Dr. Jane Smith",
+//     department: "Pediatrics",
+//     phone: "(123) 456-7890",
+//     image: "https://via.placeholder.com/48",
+//   },
+//   {
+//     id: 3,
+//     name: "Dr. David Johnson",
+//     department: "Oncology",
+//     phone: "(123) 456-7890",
+//     image: "https://via.placeholder.com/48",
+//   },
 ];
 
 const Docters = () => {

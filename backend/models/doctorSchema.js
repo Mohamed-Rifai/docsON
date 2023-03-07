@@ -5,11 +5,11 @@ const doctorSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  specialty: {
+  department: {
     type: String,
     required: true
   },
-  photo: {
+  image: {
     type: String,
     default:"https://mediaproxy.salon.com/width/1200/https://media.salon.com/2022/06/doctor-writing-notes-clipboard-0624221.jpg"
   },
