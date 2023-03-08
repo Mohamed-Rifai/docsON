@@ -102,27 +102,43 @@ export const hospitalSignupController = async (req, res) => {
             
    //for validate request datas
   const { errors, isValid } = validateSignupHospital(req.body);
-
+ 
   if (!isValid) {
     return res.status(400).json(errors);
   }
-  User.findOne({
+
+  //check dublicate hospital user
+  Hospital.findOne({
     email: req.body.email,
-  }).then(async (user) => {
-    if (user) {
+  }).then(async (hospital) => {
+    if (hospital) {
       return res.status(400).json({
         email: "Email already exists",
       });
     } else {
-      const hash = await bcrypt.hash(req.body.password, 10);
-       console.log(hash);
-      // User.create({
-      //   name: req.body.name,
-      //   email: req.body.email,
-      //   password: hash,
-      // }).then((user) => {
-      //   res.json(user);
-      // });
+
+      // save datas into collection
+
+      const data = req.body
+      const image = {
+          url: req.file.path,
+          filename: req.file.filename
+      }
+      const hash = await bcrypt.hash(data.password, 10);
+      
+      Hospital.create({
+        name: data.name,
+        email: data.email,
+        password: hash,
+        place:data.place,
+        state:data.state,
+        zip:data.zip,
+        image: image
+      })
+      .then((res) => {
+        console.log(res);
+       json({status:true})
+      });
     }
   });
 };

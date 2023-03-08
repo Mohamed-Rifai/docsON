@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "../../../axios";
+import { UseErrorToast } from "../../../hooks/useToast";
 import Validate from "./Validate";
 
 
@@ -11,7 +12,7 @@ const SignupHospital = () => {
      name: "",
      email: "",
      password: "",
-     confirmPassword: "",
+     confirmPassword: "",     
      place: "",
      state: "",
      phone: "",
@@ -82,12 +83,14 @@ const SignupHospital = () => {
              "Content-Type": "multipart/form-data",
            },
          })
-         .then((response) => {
-           console.log(response);
+         .then((res) => {
+           console.log(res);
            navigate('/hospital/login')
          })
-         .catch((error) => {
-           console.error(error);
+         .catch((err) => {
+           const error = Object.values(err.response.data); 
+           UseErrorToast({message: error[0]})
+
             setLoading(false);
          });
          
