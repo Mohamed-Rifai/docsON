@@ -1,4 +1,5 @@
 import express from 'express'
+import uploadImage from '../config/cloudinary.js'
 import {
   hospitalLoginController,
   hospitalSignupController,
@@ -10,7 +11,7 @@ const router = express.Router()
 
 router.post("/user-signup", userSignupController);
 router.post("/user-login", userLoginController);
-router.post('/hospital-signup',hospitalSignupController) 
+router.post('/hospital-signup',uploadImage, hospitalSignupController) 
 router.post('/hospital-login',hospitalLoginController)
 
 

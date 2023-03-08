@@ -9,7 +9,7 @@ export default function validateSignupHospital (data) {
     data.email = !isEmpty(data.email) ? data.email : '';
     data.password = !isEmpty(data.password) ? data.password : '';
     data.confirmPassword = !isEmpty(data.confirmPassword) ? data.confirmPassword : '';
-    data.place = !isEmpty(data.city) ? data.place : "";
+    data.place = !isEmpty(data.place) ? data.place : "";
     data.state = !isEmpty(data.state) ? data.state : '';
     data.zip = !isEmpty(data.zip) ? data.zip : '';
     data.phone = !isEmpty(data.phone) ? data.phone : "";

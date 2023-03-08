@@ -10,7 +10,6 @@ const validationSchema = Yup.object().shape({
   password: Yup.string().required("Required!!!"),
 });
 
-
 const LoginForm = () => (
   <Form>
     <div className="mb-4">
@@ -64,7 +63,6 @@ const LoginForm = () => (
 
 const Login = () => {
   const navigate = useNavigate();
-
 
   useEffect(() => {
     const token = localStorage.getItem("HospitalToken");

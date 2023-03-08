@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { UseErrorToast } from "../../../hooks/useToast";
 import formValidate from './validate'
+import axios from "../../../axios";
 
 const AddDoctorForm = ({ onClose }) => {
   const [name, setName] = useState("");
@@ -38,14 +39,8 @@ const AddDoctorForm = ({ onClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const isAtLeastOneDayChecked = Object.values(days).some(Boolean);
+
     const selectedDays = Object.keys(days).filter((day) => days[day]);
-
-    if (!isAtLeastOneDayChecked) {
-      return UseErrorToast({ message: "Must select atleast one day" });
-    }
-
-    console.log(JSON.stringify(selectedDays));
 
     const formData = new FormData();
     formData.append("name", name);
@@ -54,12 +49,34 @@ const AddDoctorForm = ({ onClose }) => {
     formData.append("days", JSON.stringify(selectedDays));
 
     //validating form values, it return a key value pair, and take value of object
-
     const error = Object.values(formValidate(name, department))[0];
-    console.log(error);
+
     if (error) {
-     return  UseErrorToast({message: error})
+      return UseErrorToast({ message: error });
     }
+
+    // checking, is atleast one day selected?
+    const isAtLeastOneDayChecked = Object.values(days).some(Boolean);
+
+    if (!isAtLeastOneDayChecked) {
+      return UseErrorToast({ message: "Must select atleast one day" });
+    }
+
+    const headers = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: localStorage.getItem("HospitalToken"),
+      },
+    };
+
+    axios
+      .post("/hospital/add-doctor", formData, headers)
+      .then((res) => {
+        console.log("then working", res);
+      })
+      .catch((err) => {
+        console.log("catch working", err);
+      });
 
     onClose();
   };

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "../../../axios";
@@ -20,8 +20,8 @@ const SignupHospital = () => {
    };
    
     const [formData, setFormData] = useState(intialValues);
+     const [loading, setLoading] = useState(false);
     const [errors, setErrors]  = useState({})
-    const formRef = useRef(null)
     const navigate = useNavigate()
    
 
@@ -50,8 +50,9 @@ const SignupHospital = () => {
    
    const handleSubmit = (e) => {
      e.preventDefault();
-     console.log(formRef.current);
-     const data = new FormData(formRef.current);
+      setLoading(true);
+    
+     const data = new FormData();
 
      data.append("name", formData.name);
      data.append("email", formData.email);
@@ -70,7 +71,11 @@ const SignupHospital = () => {
 
      if (Object.keys(errors).length !== 0) {
        setErrors(errors);
+       setLoading(false);
      } else {
+
+      setErrors('')
+
        axios
          .post("/auth/hospital-signup", data, {
            headers: {
@@ -83,7 +88,9 @@ const SignupHospital = () => {
          })
          .catch((error) => {
            console.error(error);
+            setLoading(false);
          });
+         
      }
    };
 
@@ -101,12 +108,7 @@ const SignupHospital = () => {
          </div>
          <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-md ">
            <div className="bg-gray py-8 px-4 shadow sm:rounded-lg sm:px-10 ">
-             <form
-               onSubmit={handleSubmit}
-               encType="multipart/form-data"
-               ref={formRef}
-               className="w-full max-w-lg"
-             >
+             <form onSubmit={handleSubmit} className="w-full max-w-lg">
                <div className="flex flex-wrap -mx-2 mb-4">
                  <div className="w-full md:w-1/2 px-1 mb-6 md:mb-0">
                    <label
@@ -323,10 +325,29 @@ const SignupHospital = () => {
                </div>
                <div className="flex flex-wrap -mx-0 mt-10 mb-5">
                  <button
-                   className="w-full px-5  py-3 bg-gray-200 text-gray-700 border border-gray-200 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 uppercase tracking-wide text-xs font-bold mb-2"
+                   className={` w-full px-5  py-3 bg-gray-200 text-gray-700 border border-gray-200 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 uppercase tracking-wide text-xs font-bold mb-2 ${
+                     loading ? "flex justify-center cursor-not-allowed opacity-25" : ""
+                   }`}
                    type="submit"
                  >
-                   Register
+                   {loading ? (
+                     <svg
+                       xmlns="http://www.w3.org/2000/svg"
+                       fill="none"
+                       viewBox="0 0 24 24"
+                       strokeWidth={1.5}
+                       stroke="currentColor"
+                       className="flex justify-center w-6 h-6 animate-spin items-center"
+                     >
+                       <path
+                         strokeLinecap="round"
+                         strokeLinejoin="round"
+                         d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"
+                       />
+                     </svg>
+                   ) : (
+                     "Register"
+                   )}
                  </button>
                </div>
              </form>

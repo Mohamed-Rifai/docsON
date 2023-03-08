@@ -1,6 +1,7 @@
 
-import { useState } from "react";
+import {  useState } from "react";
 import { AiOutlinePlus, AiOutlineEye, AiOutlineEdit } from "react-icons/ai";
+
 import EmptyDocters from "./EmptyDocters";
 
 const doctors = [
@@ -29,6 +30,10 @@ const doctors = [
 
 const Docters = () => {
   const [showAddDoctor, setShowAddDoctor] = useState(false);
+  
+
+
+
 
   const handleAddDoctor = () => {
     setShowAddDoctor(!showAddDoctor);

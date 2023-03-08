@@ -2,6 +2,7 @@ import User from '../models/user.js'
 import Hospital from '../models/hospitalSchema.js'
 import validateSignupInput from '../validation/signup.js'
 import validateLoginInput from '../validation/login.js'
+import validateSignupHospital from "../validation/hospitalSignup.js";
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 
@@ -98,33 +99,32 @@ export const userLoginController = async (req,res) => {
 }
 
 export const hospitalSignupController = async (req, res) => {
-             console.log(req.body);
-             res.json({message:"erangiii podaaa"})
+            
    //for validate request datas
-//   const { errors, isValid } = validateSignupHospital(req.body);
+  const { errors, isValid } = validateSignupHospital(req.body);
 
-//   if (!isValid) {
-//     return res.status(400).json(errors);
-//   }
-//   User.findOne({
-//     email: req.body.email,
-//   }).then(async (user) => {
-//     if (user) {
-//       return res.status(400).json({
-//         email: "Email already exists",
-//       });
-//     } else {
-//       const hash = await bcrypt.hash(req.body.password, 10);
-
-//       User.create({
-//         name: req.body.name,
-//         email: req.body.email,
-//         password: hash,
-//       }).then((user) => {
-//         res.json(user);
-//       });
-//     }
-//   });
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+  User.findOne({
+    email: req.body.email,
+  }).then(async (user) => {
+    if (user) {
+      return res.status(400).json({
+        email: "Email already exists",
+      });
+    } else {
+      const hash = await bcrypt.hash(req.body.password, 10);
+       console.log(hash);
+      // User.create({
+      //   name: req.body.name,
+      //   email: req.body.email,
+      //   password: hash,
+      // }).then((user) => {
+      //   res.json(user);
+      // });
+    }
+  });
 };
 
 export const hospitalLoginController = async (req, res) => {
