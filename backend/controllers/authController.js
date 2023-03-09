@@ -133,12 +133,17 @@ export const hospitalSignupController = async (req, res) => {
         place:data.place,
         state:data.state,
         zip:data.zip,
+        phone:data.phone,
         image: image
       })
-      .then((res) => {
-        console.log(res);
-       json({status:true})
-      });
+      .then((data) => {
+        console.log(data);
+     res.json({status:true})
+      })
+      .catch((err)=> {
+
+        res.json({status:false, message: err})
+      })
     }
   });
 };

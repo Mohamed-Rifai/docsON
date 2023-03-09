@@ -54,7 +54,7 @@ const NavBar = () => {
           >
             <span>Login</span>
             <ul
-              className={`absolute top-full left-0 w-40 uppercase bg-gray-800 text-white rounded-md py-2 ${
+              className={`absolute top-full left-0 w-40 uppercase bg-gray-800 text-white rounded-md py-2 z-50 ${
                 showDropdown ? "block" : "hidden"
               }`}
             >

@@ -14,6 +14,10 @@ const hospitalSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  phone: {
+    type:String,
+    required:true
+  },
 
   place: {
     type: String,

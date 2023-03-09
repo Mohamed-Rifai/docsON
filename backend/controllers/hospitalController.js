@@ -31,7 +31,9 @@ export const getOneHospital = async (req, res) => {
 };
 
 export const addDoctor = (req,res) => {
-      res.status(400).json({message:'podaaaaa'})
-    console.log(req.body);
+  console.log(req.body);
+  console.log(req.file);
+  console.log(req.hospitalId);
+  res.status(400).json({message:'podaaaaa'})
 
 }

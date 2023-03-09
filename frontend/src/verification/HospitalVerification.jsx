@@ -10,7 +10,7 @@ const  HospitalVerification = ({ children }) => {
     useEffect(()=> {
 
         if(!localStorage.getItem('HospitalToken')){
-            navigate("/hospital/login");
+            navigate("/hospital/login",{ replace : true });
         }
     })
 

@@ -12,7 +12,7 @@ const HospitalRoutes = () => (
     <Route path="/registration" element={<RegisterHospital />} />
 
     <Route path="/home" element={<HospitalHome />} />
-    <Route
+    <Route 
       path="/docters"
       element={
         <HospitalVerification>
