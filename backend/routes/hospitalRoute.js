@@ -13,6 +13,6 @@ const router = express.Router();
 
 router.get("/gethospitals", getHospitals);
 router.get("/gethospital/:id", getOneHospital);
-router.post("/add-doctor", verifyTokenHospital, addDoctor);
+router.post("/add-doctor", verifyTokenHospital, uploadImage, addDoctor);
 
 export default router;

@@ -5,8 +5,8 @@ export const verifyTokenHospital = (req, res, next) => {
   if (!token) {
     const error = new Error("No token provided");
 
-    error.statusCode = 401;
-    return next(error);
+   
+    return res.status(401).json({error:error})
   }
 
   try {
@@ -17,7 +17,7 @@ export const verifyTokenHospital = (req, res, next) => {
       next();
     }
   } catch (err) {
-    console.log("catch working", err);
+    console.log( err);
     // handle the error
     return res.status(401).json({
       error: "Invalid token",

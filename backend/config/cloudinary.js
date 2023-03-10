@@ -30,8 +30,11 @@ export default (req, res, next) => {
   upload.single("file")(req, res, (err) => {
     if (err) {
       if (err.message === "File is not an image")
+      
         return res.status(400).json({ imageError: "Selected file is not an image" });
+       
     }
+   
     return next();
   });
 };

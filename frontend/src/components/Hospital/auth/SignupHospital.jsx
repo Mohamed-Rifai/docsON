@@ -65,9 +65,7 @@ const SignupHospital = () => {
      data.append("zip", formData.zip);
      data.append("file", formData.file);
 
-    //  var formEntries = Array.from(data.entries());
-    //  console.log("formEntries ", formEntries);
-    //  console.log(JSON.stringify(formEntries)); //{}
+  
      const errors = Validate(formData);
 
      if (Object.keys(errors).length !== 0) {

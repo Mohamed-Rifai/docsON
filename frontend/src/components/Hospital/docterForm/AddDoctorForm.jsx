@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { UseErrorToast } from "../../../hooks/useToast";
+import { UseErrorToast, UseSuccessToast } from "../../../hooks/useToast";
 import formValidate from './validate'
 import axios from "../../../axios";
 
@@ -16,6 +16,7 @@ const AddDoctorForm = ({ onClose }) => {
     sunday: false,
   });
   const [image, setImage] = useState(null);
+  const [loading, setLoading] = useState(false)
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -39,19 +40,15 @@ const AddDoctorForm = ({ onClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true)
 
     const selectedDays = Object.keys(days).filter((day) => days[day]);
-
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("department", department);
-    formData.append("image", image);
-    formData.append("days", JSON.stringify(selectedDays));
 
     //validating form values, it return a key value pair, and take value of object
     const error = Object.values(formValidate(name, department))[0];
 
     if (error) {
+      setLoading(false)
       return UseErrorToast({ message: error });
     }
 
@@ -59,8 +56,17 @@ const AddDoctorForm = ({ onClose }) => {
     const isAtLeastOneDayChecked = Object.values(days).some(Boolean);
 
     if (!isAtLeastOneDayChecked) {
+      setLoading(false)
       return UseErrorToast({ message: "Must select atleast one day" });
     }
+
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("department", department);
+    formData.append("days", JSON.stringify(selectedDays));
+    formData.append("file", image);
+
+   
 
     const headers = {
       headers: {
@@ -68,17 +74,23 @@ const AddDoctorForm = ({ onClose }) => {
         Authorization: localStorage.getItem("HospitalToken"),
       },
     };
-
+        
     axios
       .post("/hospital/add-doctor", formData, headers)
       .then((res) => {
-        console.log("then working", res);
+       const response = Object.values(res.data)
+       UseSuccessToast({ message: response[0]})
+        setLoading(false)
+ onClose();
       })
       .catch((err) => {
         console.log("catch working", err);
+         const error = Object.values(err.response.data);
+         UseErrorToast({ message: error[0] });
+         setLoading(false)
       });
 
-    onClose();
+   
   };
 
   return (
@@ -151,8 +163,8 @@ const AddDoctorForm = ({ onClose }) => {
             <input
               type="file"
               accept="image/*"
-              id="image"
-              name="image"
+              id="file"
+              name="file"
               onChange={handleImageChange}
               className="focus:outline-none"
             />
@@ -160,10 +172,29 @@ const AddDoctorForm = ({ onClose }) => {
           <div className="flex justify-end mt-6">
             <button
               type="submit"
-              className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
+              className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 flex justify-center w-full lg:w-auto"
+              disabled={loading}
             >
-              Submit
+              {loading ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="animate-spin w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"
+                  />
+                </svg>
+              ) : (
+                "Submit"
+              )}
             </button>
+
             <button
               type="button"
               onClick={onClose}

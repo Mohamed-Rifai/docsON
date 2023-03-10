@@ -10,7 +10,7 @@ import 'dotenv/config'
 import authRoute from './routes/authRoute.js'
 import userRoute from './routes/userRoute.js'
 import hospitalRoute from './routes/hospitalRoute.js'
-
+import errorHandler from './middlewares/ErrorHandler.js'
 import connectDatabse from './config/database.js'
 
 const app = express()
@@ -40,6 +40,8 @@ app.use('/api/hospital',hospitalRoute)
 app.use((req,res)=>{
     res.status(404).json({ success : false , status: 404, message:"Not Found"})
 })
+
+app.use(errorHandler);
 
 
 

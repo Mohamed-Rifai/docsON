@@ -174,7 +174,7 @@ export const hospitalLoginController = async (req, res) => {
           payload,
           process.env.HOSPITAL_JWT_SECRET,
           {
-            expiresIn: 3600,
+            expiresIn: '3d',
           },
           (err, token) => {
             if (err) console.error("There is some error in token", err);
