@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import Hospital from "../models/hospitalSchema.js";
-import docterValidation from '../validation/doctorValidation.js'
+import doctorValidation from '../validation/doctorValidation.js'
 import Doctor from "../models/doctorSchema.js";
 
 
@@ -38,8 +38,8 @@ export const addDoctor = async (req, res, next) => {
  
   const { name, department, days } = req.body;
 
-  // Validate the request body using the docterValidation function
-  const { errors, isValid } = docterValidation(req.body);
+  // Validate the request body using the doctorValidation function
+  const { errors, isValid } = doctorValidation(req.body);
 
   // If the validation fails, return a 400 Bad Request error with the validation errors
   if (!isValid) {
@@ -48,14 +48,14 @@ export const addDoctor = async (req, res, next) => {
 
   try {
     // Check if a doctor already exists
-    const docterExist = await Doctor.findOne({
+    const doctorExist = await Doctor.findOne({
       name: name,
       department: department,
       hospital: req.hospitalId,
     });
 
     // If a doctor with the same details exists, return a 400 Bad Request error
-    if (docterExist) {
+    if (doctorExist) {
       return res.status(400).json({ message: "Doctor already exists" });
     }
   } catch (err) {
@@ -103,4 +103,16 @@ export const addDoctor = async (req, res, next) => {
     return next(err);
   }
 };
+
+export const getAllDoctors = async(req,res,next) => {
+
+  const doctors = await Doctor.find({hospital:req.hospitalId})
+ 
+  if (!doctors) {
+    return res.status(400).json({success:false})
+  }
+
+  return res.status(200).json(doctors)
+
+}
 

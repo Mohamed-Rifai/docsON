@@ -6,38 +6,51 @@ import {
 } from "react-icons/ri";
 import AddDoctorForm from "./docterForm/AddDoctorForm";
 import EmptyDocters from "./EmptyDocters";
+import axios from '../../axios'
 
-const doctors = [
-  {
-    id: 1,
-    name: "Dr. John Doe",
-    department: "Cardiology",
-    phone: "(123) 456-7890",
-    image: "https://via.placeholder.com/48",
-  },
-  {
-    id: 2,
-    name: "Dr. Jane Smith",
-    department: "Pediatrics",
-    phone: "(123) 456-7890",
-    image: "https://via.placeholder.com/48",
-  },
-  {
-    id: 3,
-    name: "Dr. David Johnson",
-    department: "Oncology",
-    phone: "(123) 456-7890",
-    image: "https://via.placeholder.com/48",
-  },
-];
+// const doctors = [
+//   {
+//     id: 1,
+//     name: "Dr. John Doe",
+//     department: "Cardiology",
+//     phone: "(123) 456-7890",
+//     image: "https://via.placeholder.com/48",
+//   },
+//   {
+//     id: 2,
+//     name: "Dr. Jane Smith",
+//     department: "Pediatrics",
+//     phone: "(123) 456-7890",
+//     image: "https://via.placeholder.com/48",
+//   },
+//   {
+//     id: 3,
+//     name: "Dr. David Johnson",
+//     department: "Oncology",
+//     phone: "(123) 456-7890",
+//     image: "https://via.placeholder.com/48",
+//   },
+// ];
 
 const Docters = () => {
   const [showModal, setShowModal] = useState(false);
+  const [doctors, setDoctors] = useState([])
   
   useEffect(()=> {
 
-    
-  })
+    axios.get('/hospital/getAllDoctors',{
+      headers: {
+        Authorization: localStorage.getItem("HospitalToken")
+      },
+    })
+    .then((res) => {
+      setDoctors(res.data)
+    })
+    .catch((err) => {
+      console.log('catch working****',err);
+    })
+
+  },[])
 
   const handleAddDoctor = () => {
     setShowModal(true);
