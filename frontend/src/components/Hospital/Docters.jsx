@@ -56,7 +56,7 @@ const Docters = () => {
     setShowModal(true);
   };
 
-  const handleCloseModal = () => {
+  const handleCloseModal = () => {          
     setShowModal(false)
   }
 

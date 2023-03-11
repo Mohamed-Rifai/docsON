@@ -106,13 +106,20 @@ export const addDoctor = async (req, res, next) => {
 
 export const getAllDoctors = async(req,res,next) => {
 
-  const doctors = await Doctor.find({hospital:req.hospitalId})
- 
-  if (!doctors) {
-    return res.status(400).json({success:false})
-  }
 
-  return res.status(200).json(doctors)
+  try {
+     const doctors = await Doctor.find({ hospital: req.hospitalId });
+
+     if (!doctors) {
+       return res.status(400).json({ success: false });
+     }
+
+     return res.status(200).json(doctors);
+
+  } catch (err) {
+    return next(err)
+  }
+ 
 
 }
 
