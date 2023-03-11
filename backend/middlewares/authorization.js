@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 
 export const verifyTokenHospital = (req, res, next) => {
   const token = req.headers.authorization;
-  console.log(token);
+  
   if (!token) {
     const error = new Error("No token provided");
 
@@ -13,7 +13,7 @@ export const verifyTokenHospital = (req, res, next) => {
   try {
     const decoded = jwt.verify(
       token.split(" ")[1],
-      process.env.HOSPITAL_JWT_SECRET
+      process.env.HOSPITAL_JWT_SECRET 
     );
    
     if (decoded) {

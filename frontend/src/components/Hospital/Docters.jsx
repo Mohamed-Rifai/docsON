@@ -8,32 +8,10 @@ import AddDoctorForm from "./docterForm/AddDoctorForm";
 import EmptyDocters from "./EmptyDocters";
 import axios from '../../axios'
 
-// const doctors = [
-//   {
-//     id: 1,
-//     name: "Dr. John Doe",
-//     department: "Cardiology",
-//     phone: "(123) 456-7890",
-//     image: "https://via.placeholder.com/48",
-//   },
-//   {
-//     id: 2,
-//     name: "Dr. Jane Smith",
-//     department: "Pediatrics",
-//     phone: "(123) 456-7890",
-//     image: "https://via.placeholder.com/48",
-//   },
-//   {
-//     id: 3,
-//     name: "Dr. David Johnson",
-//     department: "Oncology",
-//     phone: "(123) 456-7890",
-//     image: "https://via.placeholder.com/48",
-//   },
-// ];
 
 const Docters = () => {
   const [showModal, setShowModal] = useState(false);
+  const [reload, setReload] = useState(false)
   const [doctors, setDoctors] = useState([])
   
   useEffect(()=> {
@@ -45,12 +23,34 @@ const Docters = () => {
     })
     .then((res) => {
       setDoctors(res.data)
+     
     })
     .catch((err) => {
       console.log('catch working****',err);
     })
 
   },[])
+
+  useEffect(()=> {
+    if(reload){
+    
+      
+       axios
+         .get("/hospital/getAllDoctors", {
+           headers: {
+             Authorization: localStorage.getItem("HospitalToken"),
+           },
+         })
+         .then((res) => {
+           setDoctors(res.data);
+           setReload(false)
+         })
+         .catch((err) => {
+           console.log("catch working****", err);
+         });
+
+    }
+  },[reload])
 
   const handleAddDoctor = () => {
     setShowModal(true);
@@ -59,6 +59,12 @@ const Docters = () => {
   const handleCloseModal = () => {          
     setShowModal(false)
   }
+
+  const handleReload = () => {
+    setReload(true)
+  }
+ 
+ 
 
   return (
     <>
@@ -72,7 +78,11 @@ const Docters = () => {
             >
               <span className="font-bold">&#43;</span> Add Doctor
             </button>
-            {showModal && <AddDoctorForm onClose={handleCloseModal}/>}
+            {showModal &&
+             <AddDoctorForm 
+             onClose={handleCloseModal}
+              onReload={handleReload} 
+              />}
           </div>
 
           <div className="overflow-x-auto">
@@ -87,12 +97,12 @@ const Docters = () => {
               </thead>
               <tbody>
                 {doctors?.map((doctor) => (
-                  <tr key={doctor?.id}>
+                  <tr key={doctor?._id}>
                     <td className="border px-6 py-4">{doctor?.id}</td>
                     <td className="border px-6 py-4 flex items-center">
                       <div className="w-16 h-16 rounded-full overflow-hidden">
                         <img
-                          src={doctor?.image}
+                          src={doctor?.image[0]?.url}
                           alt={doctor?.name}
                           className="w-full h-full object-cover"
                         />
@@ -106,7 +116,6 @@ const Docters = () => {
                     <td className="border px-6 py-4 flex items-center justify-center">
                       <div className="flex items-center bg-gray-100 rounded-full px-2 py-2">
                         <RiArrowRightSLine size={24} />
-                       
                       </div>
                       <button className="bg-gray-100 rounded-full px-2 py-2 ml-4">
                         <RiDeleteBin5Line size={24} />

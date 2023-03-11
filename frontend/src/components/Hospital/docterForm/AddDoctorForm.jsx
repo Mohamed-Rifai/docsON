@@ -3,7 +3,7 @@ import { UseErrorToast, UseSuccessToast } from "../../../hooks/useToast";
 import formValidate from './validate'
 import axios from "../../../axios";
 
-const AddDoctorForm = ({ onClose }) => {
+const AddDoctorForm = ({ onClose, onReload }) => {
   const [name, setName] = useState("");
   const [department, setDepartment] = useState("");
   const [days, setDays] = useState({
@@ -16,7 +16,7 @@ const AddDoctorForm = ({ onClose }) => {
     sunday: false,
   });
   const [image, setImage] = useState(null);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -40,7 +40,7 @@ const AddDoctorForm = ({ onClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true)
+    setLoading(true);
 
     const selectedDays = Object.keys(days).filter((day) => days[day]);
 
@@ -48,7 +48,7 @@ const AddDoctorForm = ({ onClose }) => {
     const error = Object.values(formValidate(name, department))[0];
 
     if (error) {
-      setLoading(false)
+      setLoading(false);
       return UseErrorToast({ message: error });
     }
 
@@ -56,7 +56,7 @@ const AddDoctorForm = ({ onClose }) => {
     const isAtLeastOneDayChecked = Object.values(days).some(Boolean);
 
     if (!isAtLeastOneDayChecked) {
-      setLoading(false)
+      setLoading(false);
       return UseErrorToast({ message: "Must select atleast one day" });
     }
 
@@ -66,31 +66,32 @@ const AddDoctorForm = ({ onClose }) => {
     formData.append("days", JSON.stringify(selectedDays));
     formData.append("file", image);
 
-   
-
     const headers = {
       headers: {
         "Content-Type": "multipart/form-data",
         Authorization: localStorage.getItem("HospitalToken"),
       },
     };
-        
+
     axios
       .post("/hospital/add-doctor", formData, headers)
       .then((res) => {
-       const response = Object.values(res.data)
-       UseSuccessToast({ message: response[0]})
-        setLoading(false)
- onClose();
+        const response = Object.values(res.data);
+        UseSuccessToast({ message: response[0] });
+        setLoading(false);
+        onReload();
+        onClose();
       })
       .catch((err) => {
         console.log("catch working", err);
-         const error = Object.values(err.response.data);
-         UseErrorToast({ message: error[0] });
-         setLoading(false)
+        if (err.response.data) {
+          const error = Object.values(err.response.data);
+          UseErrorToast({ message: error[0] });
+          setLoading(false);
+        } else {
+          setLoading(false);
+        }
       });
-
-   
   };
 
   return (

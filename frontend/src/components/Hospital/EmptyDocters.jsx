@@ -5,6 +5,7 @@ import AddDoctorForm from "./docterForm/AddDoctorForm";
 
 const EmptyDocters = () => {
   const [showModal, setShowModal] = useState(false);
+  
 
   const handleAddDoctor = () => {
     setShowModal(true);
@@ -14,6 +15,7 @@ const EmptyDocters = () => {
     setShowModal(false);
   };
 
+  
   return (
     <div className="flex flex-col items-center justify-center h-screen pb-16">
       <img src={empty} alt="/" className="h-64 mb-4" />
@@ -29,7 +31,9 @@ const EmptyDocters = () => {
         <AiOutlineUserAdd className="mr-2" /> Add Doctor
       </button>
 
-      {showModal && <AddDoctorForm onClose={handleCloseModal} />}
+      {showModal && (
+        <AddDoctorForm onClose={handleCloseModal}  />
+      )}
     </div>
   );
 };
