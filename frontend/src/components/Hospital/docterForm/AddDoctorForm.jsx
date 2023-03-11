@@ -209,4 +209,4 @@ const AddDoctorForm = ({ onClose }) => {
   );
 };
 
-export default AddDoctorForm;
+export default AddDoctorForm;             

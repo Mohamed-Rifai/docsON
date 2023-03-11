@@ -4,7 +4,7 @@ import empty from "../../assets/empty-folder.png";
 import AddDoctorForm from "./docterForm/AddDoctorForm";
 
 const EmptyDocters = () => {
-  const [showForm, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const handleAddDoctor = () => {
     setShowModal(true);
@@ -29,7 +29,7 @@ const EmptyDocters = () => {
         <AiOutlineUserAdd className="mr-2" /> Add Doctor
       </button>
 
-      {showForm && <AddDoctorForm onClose={handleCloseModal} />}
+      {showModal && <AddDoctorForm onClose={handleCloseModal} />}
     </div>
   );
 };
