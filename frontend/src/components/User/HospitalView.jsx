@@ -12,7 +12,7 @@ const HospitalView = () => {
   useEffect(() => {
     // Fetch hospital data for the given hospitalId
     axios
-      .get(`/hospital/gethospital/${id}`)
+      .get(`/user/gethospital/${id}`)
       .then((response) => {
         setHospitalData(response.data);
       })

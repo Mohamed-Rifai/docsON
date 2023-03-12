@@ -6,33 +6,24 @@ import Doctor from "../models/doctorSchema.js";
 
 
 
+export const getHome = async (req, res, next) => {
 
+   const hospitalId = req.hospitalId;
 
-  
-export const getHospitals = async (req, res) => {
-  try {
-    //get all hospitals in db
-    const hospitals = await Hospital.find({});
+   try{
 
-    res.status(200).json(hospitals);
-  } catch (err) {
-    res.status(400).json(err);
-  }
-};
+    const hospitalData = await Hospital.findById(hospitalId).select(
+      "-_id name email"
+    );
+    console.log(hospitalData);  
 
+   }catch(err){
 
-
-export const getOneHospital = async (req, res) => {
-  try {
-      //get one particular hospital details using id
-     const data = await Hospital.findById(req.params.id);
-     res.status(200).json(data)
-  } catch (err) {
-    res.status(400).json(err);
+    console.log(err);
+   }
     
-  }
- 
-};
+
+}
 
 export const addDoctor = async (req, res, next) => {
  
@@ -54,7 +45,7 @@ export const addDoctor = async (req, res, next) => {
       hospital: req.hospitalId,
     });
 
-    // If a doctor with the same details exists, return a 400 Bad Request error
+    // check a doctor with the same details exists
     if (doctorExist) {
       return res.status(400).json({ message: "Doctor already exists" });
     }
@@ -95,7 +86,7 @@ export const addDoctor = async (req, res, next) => {
       return res.status(200).json({ message: "Doctor successfully added" });
     }
   } catch (err) {
-    // check if it was a duplicate key error and return a 400 Bad Request error 
+    // check if it was a duplicate key  
     if (err.code === 11000) {
       return res.status(400).json({ message: "Doctor already registered" });
     }
@@ -122,4 +113,6 @@ export const getAllDoctors = async(req,res,next) => {
  
 
 }
+
+
 

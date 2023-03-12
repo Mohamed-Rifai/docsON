@@ -12,7 +12,7 @@ const [datas, setDatas] = useState([])
 
 useEffect(() => {
 
-   axios.get("/hospital/gethospitals").then((res) => {
+   axios.get("/user/gethospitals").then((res) => {
     setDatas(res.data)
    });
 
