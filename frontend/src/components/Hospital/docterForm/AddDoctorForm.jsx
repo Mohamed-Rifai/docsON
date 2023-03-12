@@ -77,10 +77,10 @@ const AddDoctorForm = ({ onClose, onReload }) => {
       .post("/hospital/add-doctor", formData, headers)
       .then((res) => {
         const response = Object.values(res.data);
-        UseSuccessToast({ message: response[0] });
         setLoading(false);
         onReload();
         onClose();
+        UseSuccessToast({ message: response[0] });
       })
       .catch((err) => {
         console.log("catch working", err);

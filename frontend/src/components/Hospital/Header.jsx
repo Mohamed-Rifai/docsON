@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -8,11 +8,17 @@ const Header = () => {
   const [authenticated, setAuthenticated] = useState(false);
   const navigate = useNavigate();
 
-  // check if the user is authenticated
-  const token = localStorage.getItem("HospitalToken");
-  if (token && !authenticated) {
-    setAuthenticated(true);
-  }
+
+
+
+ 
+    // check if the user is authenticated
+    const token = localStorage.getItem("HospitalToken");
+    if (token && !authenticated) {
+      setAuthenticated(true);
+    }
+
+ 
 
   const handleNav = () => {
     setNav(!nav);
