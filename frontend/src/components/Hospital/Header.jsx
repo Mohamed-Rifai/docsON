@@ -13,12 +13,6 @@ const Header = () => {
   const name = useSelector((state) => state.hospitalAuth.name);
  
 
-
-
-
- 
- 
-
   const handleNav = () => {
     setNav(!nav);
   };
@@ -100,7 +94,10 @@ const Header = () => {
             className="p-4 relative hover:cursor-pointer"
             onClick={handleDropdown}
           >
-            <span>Lakshore</span>
+            <span className="flex items-center font-bold">
+              <FaUser className="mr-2" />
+              {name}
+            </span>
             <ul
               className={`absolute bg-gray-800 right-0 top-full w-48 text-white rounded-md py-2 ${
                 showDropdown ? "block" : "hidden"

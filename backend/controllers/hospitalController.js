@@ -15,11 +15,11 @@ export const getHome = async (req, res, next) => {
     const hospitalData = await Hospital.findById(hospitalId).select(
       "-_id name email"
     );
-   res.status(200).json(hospitalData) 
+   res.status(200).json(hospitalData)    
 
    }catch(err){
 
-    console.log(err);
+    next(err)
    }
     
 

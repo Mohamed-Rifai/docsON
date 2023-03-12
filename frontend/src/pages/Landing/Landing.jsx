@@ -12,14 +12,15 @@ import Section1 from '../../components/Landing/Section1'
 const Landing = () => {
   return (
     <div>
-     <NavBar/>
-     <Banner/>
-     <Section1/>
-     <SearchSec/>
-     <Cards/>
-     <Footer/>
+      <NavBar />
+      <Banner />
+      <Cards />
+      <SearchSec />
+      <Section1 />
+
+      <Footer />
     </div>
-  )
+  );
 }
 
 export default Landing
