@@ -10,8 +10,7 @@ const hospitalAuthSlice = createSlice({
     initialState,
     reducers: {
         setHospital: (state, action) =>{
-            console.log(state);
-            console.log(action);
+           
          return ({ ...state, ...action.payload });
         },
         clearHospital: () => initialState

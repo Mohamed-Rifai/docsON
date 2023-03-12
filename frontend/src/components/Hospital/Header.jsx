@@ -1,23 +1,22 @@
 import {  useState } from "react";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
+import { FaUser } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { clearHospital } from "../../app/slices/authHospital";
 
 const Header = () => {
   const [nav, setNav] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [authenticated, setAuthenticated] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch()
+  const name = useSelector((state) => state.hospitalAuth.name);
+ 
 
 
 
 
  
-    // check if the user is authenticated
-    const token = localStorage.getItem("HospitalToken");
-    if (token && !authenticated) {
-      setAuthenticated(true);
-    }
-
  
 
   const handleNav = () => {
@@ -31,10 +30,11 @@ const Header = () => {
   const handleLogout = () => {
     // clear the authentication token from local storage
     localStorage.removeItem("HospitalToken");
+    dispatch(clearHospital())
 
-    setAuthenticated(false);
+   
 
-    navigate("/hospital/home");
+    navigate("/hospital/login");
   };
 
   return (
@@ -54,7 +54,10 @@ const Header = () => {
           className="relative p-4 hover:cursor-pointer"
           onClick={handleDropdown}
         >
-          <span>Lakshore</span>
+          <span className="flex items-center font-bold">
+            <FaUser className="mr-2" />
+            {name}
+          </span>
           <ul
             className={`absolute top-full left-0 w-40 uppercase bg-gray-800 text-white rounded-md py-2 ${
               showDropdown ? "block" : "hidden"
