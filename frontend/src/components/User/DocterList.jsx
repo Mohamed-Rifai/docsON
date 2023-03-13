@@ -5,20 +5,14 @@ import { Link } from "react-router-dom";
 import axios from "../../axios";
 
 const DoctorList = () => {
-
   const [searchValue, setSearchValue] = useState("");
-  const [doctors, setDoctors] = useState([])
+  const [doctors, setDoctors] = useState([]);
 
-console.log(doctors);
-  useEffect(()=> {
-
-    axios.get('user/getAllDoctors')
-    .then((res)=> {
-       setDoctors(res.data)
-       
-    })
-
-  },[])
+  useEffect(() => {
+    axios.get("user/getAllDoctors").then((res) => {
+      setDoctors(res.data);
+    });
+  }, []);
 
   const handleSearchChange = (event) => {
     setSearchValue(event.target.value);
@@ -58,7 +52,7 @@ console.log(doctors);
         <div className="max-w-screen-md mx-auto my-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {doctors?.map((doctor) => (
-              <Link to="/user/docterview" key={doctor?._id}>
+              <Link to={`/user/docterview/${doctor._id}`} key={doctor?._id}>
                 <div className="bg-white rounded-lg shadow overflow-hidden">
                   <img src={doctor?.imageUrl} alt="" className="w-full" />
                   <div className="px-4 py-2">

@@ -1,7 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
+import { useParams } from "react-router-dom";
+import axios from "../../axios";
 
 const DoctorProfile = () => {
+  const [doctor, setDoctor] = useState({})
+  const doctorId = useParams().id
+ console.log(doctorId);
+  
+
+  useEffect(() => {
+    axios
+      .get(`/user/doctor-view/${doctorId}`)
+      .then((res) => {
+        console.log(res.data);
+        setDoctor(res.data);
+        
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [doctorId]);
+
+
   return (
     <div className="max-w-screen-md mx-auto my-8 ">
       <div className="bg-white rounded-lg shadow-md overflow-hidden">

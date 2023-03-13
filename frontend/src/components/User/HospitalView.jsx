@@ -10,7 +10,7 @@ const HospitalView = () => {
   const [hospitalData, setHospitalData] = useState(null);
 
   useEffect(() => {
-    // Fetch hospital data for the given hospitalId
+    // Fetch hospital using hospitalId
     axios
       .get(`/user/gethospital/${id}`)
       .then((response) => {

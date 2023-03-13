@@ -76,7 +76,7 @@ const Login = () => {
       const response = await axios.post("/auth/hospital-login", values);
       const token = response.data.token;
       localStorage.setItem("HospitalToken", token);
-      navigate("/hospital/home");
+      navigate("/hospital/home",{replace:true});
     } catch (err) {
       console.log(err);
       const obj = err.response.data;
