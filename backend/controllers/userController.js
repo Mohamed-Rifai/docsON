@@ -73,7 +73,7 @@ export const getDoctorProfile = async (req, res, next) => {
     const imageUrl = doctor.image.length > 0 ? doctor.image[0].url : null;
     // parse the availableDays array into an array of lowercase day names and check if today is in it
     const availableDays = JSON.parse(doctor.availableDays);
-    console.log(availableDays);
+    
     const availableToday = availableDays.includes(getToday());
 
     // create the response object with the relevant fields

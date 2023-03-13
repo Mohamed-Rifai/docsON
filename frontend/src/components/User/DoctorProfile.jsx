@@ -6,7 +6,7 @@ import axios from "../../axios";
 const DoctorProfile = () => {
   const [doctor, setDoctor] = useState({})
   const doctorId = useParams().id
- console.log(doctorId);
+ console.log(doctor);
   
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const DoctorProfile = () => {
       <div className="bg-white rounded-lg shadow-md overflow-hidden">
         <div className="relative">
           <img
-            src="https://mediaproxy.salon.com/width/1200/https://media.salon.com/2022/06/doctor-writing-notes-clipboard-0624221.jpg"
+            src={doctor?.imageUrl}
             alt="/"
             className="w-full h-80 object-cover "
           />
@@ -46,10 +46,12 @@ const DoctorProfile = () => {
         </div>
         <div className="p-4">
           <h2 className="text-3xl font-bold mb-4 text-gray-800">
-            Dr. John Doe
+            Dr. {doctor?.name}
           </h2>
-          <p className="text-lg font-bold text-gray-600 mb-2">Cardiology</p>
-          <p className="text-md text-gray-500 mb-4">Hospital Name</p>
+          <p className="text-lg font-bold text-gray-600 mb-2">
+            {doctor?.department}
+          </p>
+          <p className="text-md text-gray-500 mb-4">{doctor?.hospital}</p>
           <p className="text-md text-gray-600 mb-4">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis
             aliquam est magna, ut interdum ex fermentum eu. Aenean commodo elit
@@ -58,7 +60,7 @@ const DoctorProfile = () => {
           </p>
           <div className="flex justify-between items-center">
             <p className="text-md font-bold text-gray-600">Experience:</p>
-            <p className="text-md text-gray-500">10 years</p>
+            <p className="text-md text-gray-500">10+ years</p>
           </div>
           <div className="flex justify-between items-center my-2">
             <p className="text-md font-bold text-gray-600">Location:</p>
@@ -66,7 +68,16 @@ const DoctorProfile = () => {
           </div>
           <div className="flex justify-between items-center my-2">
             <p className="text-md font-bold text-gray-600">Availability:</p>
-            <p className="text-md text-green-500 font-bold">Available Today</p>
+
+            {doctor?.availableToday ? (
+              <p className="text-md text-green-500 font-bold">
+                Available Today
+              </p>
+            ) : (
+              <p className="text-md text-red-500 font-bold">
+                Unavailable Today
+              </p>
+            )}
           </div>
           <div className="flex justify-between items-center my-2">
             <p className="text-md font-bold text-gray-600">Language:</p>
@@ -78,8 +89,15 @@ const DoctorProfile = () => {
               Cardiology, Internal Medicine
             </p>
           </div>
-          <button className="text-white w-full py-3 bg-[#00df9a] rounded-md font-medium my-6">
-            Book an Appointment
+          <button
+            className={`text-white w-full py-3 rounded-md font-medium my-6 ${
+              doctor.availableToday
+                ? "bg-[#00df9a] hover:bg-[#05b68d] focus:bg-[#069171]"
+                : "bg-red-400 cursor-not-allowed"
+            }`}
+            disabled={!doctor.availableToday}
+          >
+            {doctor.availableToday ? "Book an Appointment" : "Unavailable Today"}
           </button>
         </div>
       </div>
