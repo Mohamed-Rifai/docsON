@@ -1,8 +1,9 @@
 import axios from "../../../axios";
 import { UseErrorToast } from "../../../hooks/useToast";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { useEffect } from "react";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required!!!"),
@@ -59,16 +60,32 @@ const LoginForm = () => (
 
 const UserLogin = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const path = location.state?.from;
+
+
+  useEffect(() => {
+
+    //check token exist
+    if (localStorage.getItem("UserToken")) {
+      navigate(path || "/");
+      console.log("token found");
+    }
+    // eslint-disable-next-line
+  }, []);
 
   const handleSubmit = async (values) => {
     try {
-    const response =  await axios.post("/auth/user-login", values);
+      const response = await axios.post("/auth/user-login", values);
       const token = response.data.token;
+      //store to local storage
       localStorage.setItem("UserToken", token);
-      navigate("/");
-    } catch (err) {
+
+      navigate(path || "/");
+    }
+     catch (err) {
       console.log(err);
-      const obj = err.response.data;      
+      const obj = err.response.data;
       const arr = [...Object.values(obj)];
 
       UseErrorToast({ message: arr[0] });

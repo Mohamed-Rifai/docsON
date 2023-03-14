@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
-import { useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from "../../axios";
 
 const DoctorProfile = () => {
   const [doctor, setDoctor] = useState({})
   const doctorId = useParams().id
- console.log(doctor);
+  const navigate = useNavigate()
+  const location = useLocation()
+ 
   
 
   useEffect(() => {
     axios
       .get(`/user/doctor-view/${doctorId}`)
       .then((res) => {
-        console.log(res.data);
+       
         setDoctor(res.data);
         
       })
@@ -83,6 +85,7 @@ const DoctorProfile = () => {
             </div>
           </div>
           <button
+            onClick={() => navigate("/user/appointment-page" , {state:{from: location.pathname}})}
             className={`text-white w-full py-3 rounded-md font-medium ${
               doctor.availableToday
                 ? "bg-[#00df9a] hover:bg-[#05b68d] focus:bg-[#069171]"
