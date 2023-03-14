@@ -6,11 +6,11 @@ import DoctorProfile from '../../components/User/DoctorProfile'
 const DocterProfilePage = () => {
   return (
     <div>
-        <NavBar/>
-      <DoctorProfile/>
-      <Footer/>
+      <NavBar />
+      <DoctorProfile  />
+      <Footer />
     </div>
-  )
+  );
 }
 
 export default DocterProfilePage

@@ -50,17 +50,30 @@ const DoctorList = () => {
       {/* Doctors Cards */}
       <div className="flex">
         <div className="max-w-screen-md mx-auto my-8">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
             {doctors?.map((doctor) => (
               <Link to={`/user/docterview/${doctor._id}`} key={doctor?._id}>
                 <div className="bg-white rounded-lg shadow overflow-hidden">
-                  <img src={doctor?.imageUrl} alt="" className="w-full" />
+                  <div className="relative">
+                    <img
+                      src={doctor?.imageUrl}
+                      alt=""
+                      className="h-64 w-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
+                    <div className="absolute bottom-0 left-0 p-4">
+                      <h2 className="text-2xl font-bold text-white">
+                        {doctor?.name}
+                      </h2>
+                      <p className="text-lg text-gray-300">
+                        {doctor?.department}
+                      </p>
+                      <p className="text-lg text-gray-300">
+                        {doctor?.hospital?.name}
+                      </p>
+                    </div>
+                  </div>
                   <div className="px-4 py-2">
-                    <h2 className="text-lg font-bold text-gray-800">
-                      Dr. {doctor?.name}
-                    </h2>
-                    <p className="text-gray-600">{doctor?.department}</p>
-                    <p className="text-gray-500">{doctor?.hospital?.name}</p>
                     <div className="flex items-center">
                       <span className="text-yellow-500">
                         <svg

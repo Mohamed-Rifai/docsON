@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const NavBar = () => {
   const [nav, setNav] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation()
 
   const handleNav = () => {
     setNav(!nav);
@@ -36,11 +37,21 @@ const NavBar = () => {
       <h1 className="w-full text-3xl font-bold  text-[#00df9a]">+docsOn</h1>
 
       <ul className="hidden md:flex">
-        <Link to="/">
+        <Link
+          className={location.pathname === "/" ? "font-bold underline" : " "}
+          to="/"
+        >
           <li className="p-4">Home</li>
         </Link>
         <li className="p-4">Company</li>
-        <Link to="/user/docterslist">
+        <Link
+          className={
+            location.pathname === "/user/docterslist"
+              ? "font-bold underline"
+              : " "
+          }
+          to="/user/docterslist"
+        >
           <li className="p-4">Docters</li>
         </Link>
         {authenticated ? (
@@ -84,11 +95,21 @@ const NavBar = () => {
         </h1>
 
         <ul className="uppercase p-4">
-          <Link to="/">
+          <Link
+            className={location.pathname === "/" ? "font-bold underline" : " "}
+            to="/"
+          >
             <li className="p-4 border-b border-gray-600">Home</li>
           </Link>
           <li className="p-4 border-b border-gray-600 ">Company</li>
-          <Link to="/user/docterslist">
+          <Link
+            className={
+              location.pathname === "/user/docterslist"
+                ? "font-bold underline"
+                : " "
+            }
+            to="/user/docterslist"
+          >
             <li className="p-4 border-b border-gray-600">Doctors</li>
           </Link>
           {authenticated ? (
@@ -109,7 +130,9 @@ const NavBar = () => {
                   showDropdown ? "block" : "hidden"
                 }`}
               >
-                <Link to="/user/login">
+                <Link
+                  to="/user/login"
+                >
                   <li className="p-4 border-b border-gray-600 hover:bg-gray-900">
                     User Login
                   </li>
