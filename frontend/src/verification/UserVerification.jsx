@@ -10,7 +10,7 @@ useEffect(() => {
 
   if (!localStorage.getItem("UserToken")) {
     navigate("/user/login", {
-      state: { from: location.state.from },
+      state: { from: location?.state?.from },
       replace: true,
     });
   }

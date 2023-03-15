@@ -72,7 +72,7 @@ export const userLoginController = async (req,res) => {
                     payload,
                     process.env.USER_JWT_SECRET,
                     {
-                      expiresIn: 3600,
+                      expiresIn: '3d',
                     },
                     (err, token) => {
                       if (err)

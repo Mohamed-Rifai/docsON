@@ -1,5 +1,7 @@
 import Hospital from "../models/hospitalSchema.js";
 import Doctor from '../models/doctorSchema.js'
+import Razorpay from 'razorpay'
+import crypto from 'crypto'
 
 
 
@@ -111,6 +113,60 @@ function getToday() {
    
   // return the lowercase day name
   return days[todayIndex];
+}
+
+export const appointmentWithPayment =async (req, res, next ) => {
+       
+  console.log(req.body);
+  console.log(req.userId);
+
+  try {
+    const instance = new Razorpay({
+      key_id: process.env.RAZORPAY_KEY_ID,
+      key_secret: process.env.RAZORPAY_KEY_SECRET,
+    });
+
+    const options = {
+      amount: 100*100,
+      currency: "INR",
+      receipt: crypto.randomBytes(10).toString("hex"),
+    }
+    
+    instance.orders.create(options,(err,order) => {
+      if(err){
+        console.log(err);
+        next()
+      }
+      res.status(200).json({data:order}) 
+    })
+
+
+  } catch (err) {
+    console.log('catch working apoinmetwithpayment'); 
+    next(err)   
+  }
+
+}
+
+export const verifyPayment = (req, res, next ) => {
+    try {
+      const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+      const sign = razorpay_order_id + "|" + razorpay_payment_id;
+      const expectedSign =  crypto
+      .createHmac("sha256",process.env.RAZORPAY_KEY_SECRET)
+      .update(sign.toString())
+      .digest("hex")
+
+      if(razorpay_signature === expectedSign) {
+        return res.status(200).json({ message: "Payment verified successfully"})
+      }else{
+        res.status(400).json({ message: "Invalid signature sent"})
+      }
+
+    } catch (err) {
+      console.log(err,'veryfyPayment catch working');
+      next(err)
+    }
 }
 
 

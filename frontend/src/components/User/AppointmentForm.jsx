@@ -2,6 +2,8 @@ import React from 'react'
 
 import { useState } from 'react';
 import { useLocation, useNavigate} from 'react-router-dom'
+import axios from "../../axios";
+import {razorpayKey} from '../../Constants/Constants'
 
 const AppointmentForm = () => {
   const initialState = {name: "", place: "", phone: "", age:"", time:"",}
@@ -10,21 +12,64 @@ const AppointmentForm = () => {
   const location = useLocation()
 
   // find the prev path
-  const prevPage = location.state.from
-  console.log(prevPage);
+  const prevPage = location?.state?.from
+  
 
 
   const handleChange = (e) => {
     
     const {name, value} = e.target
-    console.log(formData);
+    
     setFormData((prevState => ({...prevState, [name]:value})))
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    axios
+      .post("user/appointment-payment", formData, {
+        headers: {
+          Authorization: localStorage.getItem("UserToken"),
+        },
+      })
+      .then((response) => {
+       console.log(response.data);
+        verifyPayment(response.data.data)
+      })
+      .catch((error) => {
+        // handle error
+        console.log(error);
+      });
+    
     
   };
+
+  const verifyPayment = (data) => {
+    const option = {
+      key: razorpayKey,
+      amount: data.amount,
+      currency: data.currency,
+      name: "hello",
+      description: "Test Transaction",
+      image: "https://dummyimage.com/16:9x1080/",
+      order_id:data.id,
+      handler: async (res) => {
+        try {
+          
+          const {data} = await axios.post('/user/verifyPayment', res)
+          console.log(data);
+        } catch (error) {
+          console.log(error);
+        }
+      },
+      theme:{
+        color: "#3399cc",
+
+      }
+    };
+    const rzp1 = new window.Razorpay(option);
+    rzp1.open();
+  }
 
   const handleCancel = () => {
     
@@ -86,6 +131,7 @@ const AppointmentForm = () => {
                   className="border-gray-300 border rounded-md py-2 px-4 w-full"
                   type="text"
                   id="age"
+                  name="age"
                   value={formData.age}
                   onChange={handleChange}
                 />
@@ -97,6 +143,7 @@ const AppointmentForm = () => {
                 <select
                   className="border-gray-300 border rounded-md py-2 px-4 w-full appearance-none"
                   id="time"
+                  name="time"
                   value={formData.time}
                   onChange={handleChange}
                 >
