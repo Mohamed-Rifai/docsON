@@ -63,7 +63,7 @@ const AppointmentForm = () => {
         }
       },
       theme:{
-        color: "#3399cc",
+        color: "#03d0aa",
 
       }
     };

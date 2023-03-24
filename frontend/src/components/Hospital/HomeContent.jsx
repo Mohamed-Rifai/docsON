@@ -14,7 +14,7 @@ const HomeContent = () => {
           </p>
         </div>
         <p className="md:text-2xl text-xl font-bold text-gray-500">
-          welcome to koottilangadinnnjii
+          welcome DocsOn 
         </p>
         <button className="bg-[#00df9a] w-[200px] rounded-md font-medium my-6 mx-auto py-3 text-black">
           Book now

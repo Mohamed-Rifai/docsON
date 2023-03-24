@@ -99,7 +99,7 @@ export const getAllDoctors = async(req,res,next) => {
 
 
   try {
-     const doctors = await Doctor.find({ hospital: req.hospitalId });
+     const doctors = await Doctor.find({ hospital: req.hospitalId }).sort({createdAt: -1})
 
      if (!doctors) {
        return res.status(400).json({ success: false });
@@ -113,6 +113,27 @@ export const getAllDoctors = async(req,res,next) => {
  
 
 }
+
+export const getDoctorView =async ( req, res, next) => { 
+
+    try {
+     const doctor = await Doctor.findById(req.params.id)
+     console.log(doctor);
+
+     if(!doctor) {
+      return res.status(404).json({error: 'Doctor not found'})
+     }
+
+    return res.status(200).json(doctor) 
+      
+    } catch (err) {
+      return next(err)
+    }
+
+
+
+}   
+
 
 
 

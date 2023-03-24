@@ -6,6 +6,7 @@ import {  FaEye } from "react-icons/fa";
 import { BsFillTrashFill } from "react-icons/bs";
 import empty from "../../assets/empty-folder.png";
 import axios from '../../axios'
+import { Link } from "react-router-dom";
 
 
 const Docters = () => {
@@ -94,13 +95,10 @@ const Docters = () => {
             <table className="w-full text-left table-auto">
               <thead className="bg-black text-white">
                 <tr>
-                  
                   <th className="px-1 py-4   items-center justify-center">
-                   No
+                    No
                   </th>
-                  <th className="px-6 py-4  items-center">
-                    Name
-                  </th>
+                  <th className="px-6 py-4  items-center">Name</th>
                   <th className="px-4 py-2  items-center justify-center">
                     Department
                   </th>
@@ -108,9 +106,9 @@ const Docters = () => {
                 </tr>
               </thead>
               <tbody>
-                {doctors.map((doctor,index) => (
+                {doctors.map((doctor, index) => (
                   <tr key={doctor._id}>
-                    <td className="border px-2 py-2">{index+1}</td>
+                    <td className="border px-2 py-2">{index + 1}</td>
 
                     <td className="border  px-4 py-4 flex items-center justify-center">
                       {doctor.name}
@@ -120,9 +118,11 @@ const Docters = () => {
                       <button className="mx-2 text-gray-400 hover:text-red-600">
                         <BsFillTrashFill />
                       </button>
-                      <button className="mx-2 text-gray-400 hover:text-green-600">
-                        <FaEye />
-                      </button>
+                      <Link to={`/hospital/doctor-view/${doctor._id}`}> 
+                        <button className="mx-2 text-gray-400 hover:text-green-600">
+                          <FaEye />
+                        </button>
+                      </Link>
                     </td>
                   </tr>
                 ))}
