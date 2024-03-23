@@ -1,9 +1,7 @@
 import React from 'react'
-
 import { useState } from 'react';
 import { useLocation, useNavigate} from 'react-router-dom'
 import axios from "../../axios";
-import {razorpayKey} from '../../Constants/Constants'
 
 const AppointmentForm = () => {
   const initialState = {name: "", place: "", phone: "", age:"", time:"",}
@@ -46,7 +44,7 @@ const AppointmentForm = () => {
 
   const verifyPayment = (data) => {
     const option = {
-      key: razorpayKey,
+      key: "rzp_test_24IzJooOKLJ80Y",
       amount: data.amount,
       currency: data.currency,
       name: "hello",
